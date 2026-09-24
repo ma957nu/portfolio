@@ -142,7 +142,12 @@
       const nombre = document.createElement("h3");
       nombre.textContent = p.nombre;
       cabecera.appendChild(nombre);
-      if (p.destacado) {
+      if (p.estado) {
+        const marca = document.createElement("span");
+        marca.className = "mono marca-estado";
+        marca.textContent = p.estado;
+        cabecera.appendChild(marca);
+      } else if (p.destacado) {
         const marca = document.createElement("span");
         marca.className = "mono marca-destacado";
         marca.textContent = "proyecto propio";
@@ -187,6 +192,13 @@
           etiquetas.appendChild(li);
         });
         art.appendChild(etiquetas);
+      }
+
+      if (p.nota) {
+        const nota = document.createElement("p");
+        nota.className = "tarjeta-proyecto__nota";
+        nota.textContent = p.nota;
+        art.appendChild(nota);
       }
 
       if (p.enlace) {
@@ -286,7 +298,8 @@
     fila("email", c.email, "mailto:" + c.email);
     fila("teléfono", c.telefono, "tel:" + c.telefono);
     fila("github", "ma957nu", c.github);
-    fila("linkedin", c.linkedin ? "linkedin" : "", c.linkedin);
+    fila("linkedin", c.linkedin ? "Manuel Pérez Manivesa" : "", c.linkedin);
+    fila("hackthebox", c.hackthebox ? "perfil público" : "", c.hackthebox);
   }
 
   function pintarPie() {

@@ -482,6 +482,38 @@ a {
   text-transform: lowercase;
 }
 
+/* Estado del proyecto: pastilla discreta. El punto lleva el acento, el texto
+   se queda en gris para no competir con el titular de la ficha. */
+.marca-estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.15em 0.65em;
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  color: var(--texto-tenue);
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+.marca-estado::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--acento);
+}
+
+.tarjeta-proyecto__nota {
+  margin: 0;
+  padding-top: var(--s1);
+  font-family: var(--fuente-mono);
+  font-size: var(--paso-1);
+  line-height: 1.5;
+  color: var(--texto-apagado);
+}
+
 .tarjeta-proyecto__resumen {
   max-width: none;
   font-size: var(--paso0);

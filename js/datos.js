@@ -35,8 +35,10 @@ const DATOS = {
     // Si rellenas la dirección aparecerá en la web pública. Se deja vacía por privacidad.
     direccion: "",
     github: "https://github.com/ma957nu",
-    // Pon aquí tu URL de LinkedIn cuando la tengas. Si se queda vacía, el enlace no se muestra.
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/manuel-p%C3%A9rez-manivesa-11b9943b9/",
+    // Perfil de HackTheBox. El enlace va sin los parámetros de la barra del
+    // navegador, que solo guardan las pestañas que tenías abiertas.
+    hackthebox: "https://app.hackthebox.com/users/3368481",
   },
 
   cv: {
@@ -117,37 +119,42 @@ const DATOS = {
   proyectos: [
     {
       destacado: true,
+      // Si quitas "estado", la ficha vuelve a mostrar solo "proyecto propio".
+      estado: "en desarrollo",
       nombre: "JondaSiviz",
       resumen: "Planificador de preparación de coches del grupo Volkswagen.",
       problema:
         "Elegir piezas de preparación compatibles entre sí y legales es un trabajo manual propenso a errores: una pieza puede encajar en el motor y no en el chasis, o dejar el coche fuera de norma.",
       stack: ["React", "TypeScript", "Tauri"],
       resultado:
-        "Catálogo de 207 modelos y 271 piezas con un motor de compatibilidad que cruza plataforma de motor, chasis y reglas de legalidad de la UE antes de sugerir nada. Disponible como app web y de escritorio.",
+        "Catálogo de 207 modelos y 271 piezas con un motor de compatibilidad que cruza plataforma de motor, chasis y reglas de legalidad de la UE antes de sugerir nada. Funciona como app web y de escritorio, y sigue creciendo.",
+      nota: "Todavía no está terminado. Las buenas cosas se hacen lentamente.",
       enlace: "https://github.com/JondaSivizVolkswagen/jondasiviz",
       enlaceEtiqueta: "ver repositorio",
     },
-    // Plantilla de ejemplo. Borra o sustituye por tu propio homelab cuando lo documentes.
     {
       destacado: false,
-      nombre: "Homelab",
-      resumen: "Ejemplo de ficha para tu laboratorio doméstico.",
-      problema: "Describe aquí qué querías montar y por qué.",
-      stack: ["Proxmox", "pfSense", "..."],
-      resultado: "Qué conseguiste, qué aprendiste, qué queda pendiente.",
-      enlace: "",
-      enlaceEtiqueta: "ver detalle",
+      nombre: "Kali AwesomeWM Rice",
+      resumen: "Mi entorno de trabajo para pentesting, montado sobre Kali.",
+      problema:
+        "Saltar entre máquinas y laboratorios cuesta tiempo si cada vez hay que recolocar el escritorio y comprobar a mano en qué interfaz estás.",
+      stack: ["AwesomeWM", "Lua", "picom", "Bash"],
+      resultado:
+        "Configuración completa de AwesomeWM con un widget de IP que cambia de color según el estado de la interfaz, y un install.sh que deja el entorno montado en un paso.",
+      enlace: "https://github.com/ma957nu/mi-kali-rice",
+      enlaceEtiqueta: "ver repositorio",
     },
-    // Plantilla de ejemplo. Borra o sustituye cuando publiques tu primer write-up de CTF.
     {
       destacado: false,
-      nombre: "Write-up de CTF",
-      resumen: "Ejemplo de ficha para un reto resuelto en TryHackMe o HackTheBox.",
-      problema: "Qué máquina o reto era y qué vulnerabilidad explotaba.",
-      stack: ["nmap", "Burp Suite", "..."],
-      resultado: "Cómo llegaste al objetivo, paso a paso.",
-      enlace: "",
-      enlaceEtiqueta: "ver write-up",
+      nombre: "DebianAwesomeWM",
+      resumen: "El mismo entorno, adaptado a Debian 12.",
+      problema:
+        "Reinstalar y dejar un equipo Debian como lo tenía configurado significaba repetir horas de ajustes uno a uno.",
+      stack: ["AwesomeWM", "Kitty", "Zsh", "Rofi", "Neovim"],
+      resultado:
+        "Dotfiles versionados del escritorio entero: gestor de ventanas, terminal, launcher, editor y compositor, listos para clonar y volver a tener el equipo igual.",
+      enlace: "https://github.com/ma957nu/DebianAwesomeWM",
+      enlaceEtiqueta: "ver repositorio",
     },
   ],
 
