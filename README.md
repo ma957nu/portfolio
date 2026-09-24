@@ -19,8 +19,14 @@ index.html          estructura de la página
 css/estilo.css       estilo (tema oscuro, tipografía, layout)
 js/datos.js           todo el contenido editable
 js/app.js              vuelca datos.js en el HTML
-cv/Manuel_Perez_CV.pdf  CV descargable
 ```
+
+## El CV
+
+La web no ofrece el CV en descarga. El PDF original lleva teléfono y dirección
+postal, y esto es una página pública. Si quieres ofrecerlo, prepara una versión
+sin esos datos, guárdala en `cv/` y pon su ruta en `cv.archivo` dentro de
+`js/datos.js`: el botón de descarga vuelve a aparecer solo.
 
 ## Desplegar en Netlify
 

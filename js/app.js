@@ -20,7 +20,7 @@
     texto("hero-nombre", DATOS.perfil.nombre);
     texto("hero-rol", DATOS.perfil.rol);
     texto("hero-objetivo", DATOS.perfil.objetivo);
-    texto("hero-resumen", DATOS.perfil.resumen);
+    texto("hero-resumen", DATOS.perfil.titular || DATOS.perfil.resumen);
     texto("hero-ubicacion", DATOS.perfil.ubicacion);
     texto("sobre-mi-texto", DATOS.perfil.resumen);
 
@@ -34,6 +34,16 @@
         el.remove();
       }
     });
+
+    // Sin CV, el hero se quedaría con un único botón de contorno: le damos el
+    // peso del botón principal para que la llamada a la acción no se pierda.
+    if (!cv) {
+      const contacto = document.querySelector(".hero__acciones .boton--linea");
+      if (contacto) {
+        contacto.classList.remove("boton--linea");
+        contacto.classList.add("boton--primario");
+      }
+    }
   }
 
   function pintarExperiencia() {

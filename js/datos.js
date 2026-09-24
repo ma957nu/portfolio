@@ -19,6 +19,11 @@ const DATOS = {
     objetivo: "orientado a Ciberseguridad · Analista SOC N1",
     ubicacion: "A Coruña, España",
     eyebrow: "sistemas · redes · ciberseguridad",
+    // Frase corta de portada. Va debajo del nombre, conviene que quepa en
+    // dos o tres líneas.
+    titular:
+      "Administro sistemas y accesos en un entorno bancario real. Ahora estoy llevando esa experiencia hacia la defensa: detección de amenazas, hardening y automatización.",
+    // Texto largo de la sección "Quién soy".
     resumen:
       "Llevo cerca de un año administrando sistemas en un entorno bancario real, con herramientas de identidad y acceso que no perdonan un fallo. Resuelvo incidencias por mi cuenta y aprendo rápido lo que hace falta para la siguiente. Ahora mismo estoy cursando un máster en Ciberseguridad e Inteligencia Artificial para enfocar ese conocimiento hacia detección de amenazas, hardening y automatización de despliegues seguros.",
   },
@@ -35,7 +40,11 @@ const DATOS = {
   },
 
   cv: {
-    archivo: "cv/Manuel_Perez_CV.pdf",
+    // Vacío a propósito: el PDF del CV lleva teléfono y dirección postal, y la
+    // web es pública. Si algún día quieres ofrecerlo, deja aquí la ruta de una
+    // versión recortada (por ejemplo "cv/Manuel_Perez_CV_publico.pdf") y el
+    // botón de descarga vuelve a aparecer solo.
+    archivo: "",
     etiqueta: "descargar CV",
   },
 
