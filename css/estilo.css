@@ -23,6 +23,14 @@
 }
 
 @font-face {
+  font-family: "Departure Mono";
+  src: url("../fonts/departure-mono.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "Simbolos";
   src: url("../fonts/simbolos-nerd.woff2") format("woff2");
   font-weight: 400;
@@ -53,7 +61,10 @@
   --aviso: #e8836f;
 
   /* tipografía */
-  --fuente-sans: "Inter", -apple-system, "Segoe UI", "Segoe UI Variable", system-ui, sans-serif;
+  /* Todo el texto va en Hack; los titulares, en la de píxeles. Al no quedar
+     ninguna fuente de Google, la web ya no pide nada a terceros. */
+  --fuente-sans: "Hack", ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+  --fuente-titulo: "Departure Mono", "Hack", ui-monospace, "Consolas", monospace;
   --fuente-mono: "Hack", ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
 
   /* escala tipográfica, razón ~1.22 */
@@ -158,16 +169,19 @@ a {
 }
 
 .titulo-seccion {
+  font-family: var(--fuente-titulo);
   font-size: var(--paso3);
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-weight: 400;
+  letter-spacing: 0.01em;
   margin: 0 0 var(--s4);
 }
 
 .prosa {
   max-width: 62ch;
   color: var(--texto-tenue);
-  line-height: 1.6;
+  /* Un párrafo monoespaciado cansa más que uno en sans: se compensa con
+     interlineado y con la medida corta de arriba. */
+  line-height: 1.75;
 }
 
 .texto-grande {
@@ -271,10 +285,11 @@ a {
 }
 
 .hero__titulo {
+  font-family: var(--fuente-titulo);
   font-size: var(--paso5);
-  line-height: 1.05;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: 0.01em;
   margin: 0 0 var(--s2);
 }
 
@@ -1044,4 +1059,19 @@ body::before {
   .globo__eventos {
     min-height: 0;
   }
+}
+
+.globo__destino {
+  margin: var(--s3) 0 0;
+  font-size: var(--paso-1);
+  color: var(--texto-tenue);
+}
+
+.globo__destino .icono,
+.globo__evento-tipo .icono {
+  color: var(--acento);
+}
+
+.globo__evento-tipo .icono {
+  margin-right: 0.45em;
 }

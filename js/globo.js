@@ -29,6 +29,27 @@
 
   const menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+  // Un icono por tipo de intento. Las claves son los mismos textos que hay en
+  // DATOS.globo.origenes; si añades un tipo nuevo sin icono, la fila se pinta
+  // igual, solo que sin él.
+  const ICONOS_TIPO = {
+    "escaneo de puertos": 0xf002,
+    "fuerza bruta SSH": 0xf120,
+    "fuerza bruta RDP": 0xf108,
+    "sondeo HTTP": 0xf0ac,
+    "sondeo de API": 0xf121,
+    "credenciales por defecto": 0xf084,
+  };
+
+  function icono(punto) {
+    if (!punto) return null;
+    const span = document.createElement("span");
+    span.className = "icono";
+    span.setAttribute("aria-hidden", "true");
+    span.textContent = String.fromCodePoint(punto);
+    return span;
+  }
+
   function avisar(mensaje) {
     const aviso = document.getElementById("globo-aviso");
     if (!aviso) return;
@@ -68,7 +89,9 @@
 
     const que = document.createElement("span");
     que.className = "globo__evento-tipo";
-    que.textContent = origen.tipo;
+    const ico = icono(ICONOS_TIPO[origen.tipo]);
+    if (ico) que.appendChild(ico);
+    que.appendChild(document.createTextNode(origen.tipo));
 
     li.appendChild(donde);
     li.appendChild(que);

@@ -42,15 +42,20 @@ La sección `~/mapa` dibuja un globo con three.js: los continentes son puntos, y
 
 ## Tipografías e iconos
 
-La mono es **Hack** y los iconos son glifos de **Nerd Fonts**. Las dos se sirven desde `fonts/`, no desde un CDN, y van recortadas a lo que la web usa de verdad:
+Tres fuentes, las tres servidas desde `fonts/` y recortadas a lo que la web usa. **No se pide nada a Google ni a ningún CDN**, así que la web no depende de terceros ni filtra a nadie quién la visita.
 
-| archivo | contenido | peso |
+| archivo | para qué | peso |
 | --- | --- | --- |
-| `hack-regular.woff2` | Hack, solo latín y signos | 15 KB |
+| `departure-mono.woff2` | titulares (fuente de píxeles) | 4,8 KB |
+| `hack-regular.woff2` | todo el texto | 15 KB |
 | `hack-bold.woff2` | lo mismo en negrita | 15 KB |
-| `simbolos-nerd.woff2` | los 22 iconos que se usan | 4 KB |
+| `simbolos-nerd.woff2` | los 26 iconos que se usan | 4,3 KB |
 
 Sin recortar, Hack pesa 105 KB por peso y la fuente de símbolos 2,4 MB.
+
+Departure Mono solo tiene un grosor, así que los titulares llevan `font-weight: 400`: pedirle negrita haría que el navegador se la invente y los píxeles se emborronan. El texto corrido va en Hack con `line-height: 1.75`, más aire del normal, porque un párrafo monoespaciado cansa más que uno en sans.
+
+Si prefieres volver a una sans para el texto corrido, es una línea: cambia `--fuente-sans` en `css/estilo.css`.
 
 Un icono se escribe así, y siempre con `aria-hidden` para que un lector de pantalla no lo lea:
 
@@ -58,7 +63,7 @@ Un icono se escribe así, y siempre con `aria-hidden` para que un lector de pant
 <span class="icono" aria-hidden="true">&#xf007;</span>
 ```
 
-En `js/app.js` hay un objeto `ICONOS` con los puntos de código que usan las partes generadas por JavaScript (contacto, stack, proyectos, triage).
+Los puntos de código de las partes generadas por JavaScript están en el objeto `ICONOS` de `js/app.js` y en `ICONOS_TIPO` de `js/globo.js` (uno por tipo de intento del globo).
 
 **Si añades un icono nuevo hay que regenerar la fuente**, porque el que no esté en el recorte sale como un cuadradito vacío. Hace falta la fuente completa (`SymbolsNerdFont-Regular.ttf` del repositorio de Nerd Fonts) y el paquete `subset-font`:
 
@@ -69,7 +74,7 @@ const iconos = [0xf007, 0xf0b1 /* ...y el nuevo */]
 const recortada = await subsetFont(fuenteCompleta, iconos, { targetFormat: 'woff2' });
 ```
 
-Las licencias de ambas fuentes están en `fonts/`. Inter se sigue pidiendo a Google Fonts.
+Las licencias de las tres fuentes están en `fonts/`. Departure Mono es de Helena Zhang, bajo SIL Open Font License.
 
 ## El icono de la pestaña
 
@@ -88,7 +93,7 @@ js/fondo.js             red de nodos del fondo
 js/globo.js              globo 3D de ~/mapa
 js/globo-puntos.js        los continentes, punto a punto
 js/vendor/three.module.js  three.js
-fonts/                   Hack y los iconos, recortadas
+fonts/                   las tres fuentes, recortadas
 favicon.svg               icono de la pestaña
 apple-touch-icon.png      el mismo icono para iOS
 netlify.toml               configuración de despliegue y cabeceras
@@ -103,7 +108,7 @@ sin esos datos, guárdala en `cv/` y pon su ruta en `cv.archivo` dentro de
 
 ## Cabeceras de seguridad
 
-`netlify.toml` fija una CSP que solo permite estilos de Google Fonts, fuentes del propio sitio y de Google, y scripts del propio sitio. **No admite scripts ni estilos escritos dentro del HTML**: si añades un `<script>` con código suelto o un `style="..."` en una etiqueta, funcionará en local y fallará en producción. Todo el JavaScript va en archivos dentro de `js/`.
+`netlify.toml` fija una CSP cerrada: todo (estilos, fuentes, scripts) tiene que venir del propio sitio. Al dejar de usar Google Fonts ya no hay ninguna excepción para dominios externos. **No admite scripts ni estilos escritos dentro del HTML**: si añades un `<script>` con código suelto o un `style="..."` en una etiqueta, funcionará en local y fallará en producción. Todo el JavaScript va en archivos dentro de `js/`.
 
 ## Desplegar en Netlify
 

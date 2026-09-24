@@ -368,6 +368,7 @@
     texto("globo-titulo", DATOS.globo.titulo);
     texto("globo-intro", DATOS.globo.intro);
     texto("globo-nota", DATOS.globo.nota);
+    if (DATOS.globo.destino) texto("globo-destino", "destino: " + DATOS.globo.destino.nombre);
   }
 
   function pintarFormacion() {
