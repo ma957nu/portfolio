@@ -30,6 +30,12 @@ Son dos capas y ninguna captura el ratón:
 - La rejilla de 48px es CSS puro (`body::before` en `css/estilo.css`).
 - La red de nodos es `js/fondo.js` dibujando sobre un `<canvas>`. Se para sola si la pestaña deja de verse y, si el sistema pide menos movimiento, pinta un fotograma y no anima. Para quitarla, borra la etiqueta `<script src="js/fondo.js">` de `index.html`.
 
+## El icono de la pestaña
+
+`favicon.svg` es el icono que sale en la pestaña del navegador: un prompt `>_` en verde sobre fondo oscuro, dibujado con formas y sin texto, para que se vea igual en cualquier sistema. `apple-touch-icon.png` es el mismo icono a 180px, que es el que usa iOS al guardar la web en la pantalla de inicio.
+
+Si lo cambias, toca los dos archivos: el navegador cachea los iconos con ganas, así que puede tardar en refrescarse (Ctrl+F5, o abrir `favicon.svg` directamente para comprobar el nuevo).
+
 ## Estructura
 
 ```
@@ -38,7 +44,9 @@ css/estilo.css       estilo (tema oscuro, tipografía, layout)
 js/datos.js           todo el contenido editable
 js/app.js              vuelca datos.js en el HTML y mueve el triage
 js/fondo.js             red de nodos del fondo
-netlify.toml             configuración de despliegue y cabeceras
+favicon.svg              icono de la pestaña
+apple-touch-icon.png      el mismo icono para iOS
+netlify.toml               configuración de despliegue y cabeceras
 ```
 
 ## El CV
