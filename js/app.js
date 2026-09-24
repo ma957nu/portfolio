@@ -355,6 +355,21 @@
     mostrarCaso();
   }
 
+  /* Textos de la sección del globo. El 3D lo monta js/globo.js. */
+  function pintarGlobo() {
+    const seccion = document.getElementById("mapa");
+    if (!seccion) return;
+    if (!DATOS.globo) {
+      seccion.remove();
+      const enlace = document.querySelector('.nav a[href="#mapa"]');
+      if (enlace) enlace.remove();
+      return;
+    }
+    texto("globo-titulo", DATOS.globo.titulo);
+    texto("globo-intro", DATOS.globo.intro);
+    texto("globo-nota", DATOS.globo.nota);
+  }
+
   function pintarFormacion() {
     const cont = document.getElementById("lista-formacion");
     if (!cont) return;
@@ -476,6 +491,7 @@
     pintarStack();
     pintarProyectos();
     pintarTriage();
+    pintarGlobo();
     pintarFormacion();
     pintarIdiomas();
     pintarContacto();

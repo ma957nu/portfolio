@@ -30,6 +30,7 @@
         <a href="#stack"><span class="icono" aria-hidden="true">&#xf1b3;</span>~/stack</a>
         <a href="#proyectos"><span class="icono" aria-hidden="true">&#xf401;</span>~/proyectos</a>
         <a href="#triage"><span class="icono" aria-hidden="true">&#xf188;</span>~/triage</a>
+        <a href="#mapa"><span class="icono" aria-hidden="true">&#xf05b;</span>~/mapa</a>
         <a href="#contacto"><span class="icono" aria-hidden="true">&#xf0e0;</span>~/contacto</a>
       </nav>
       <a class="boton boton--linea nav-cv" id="enlace-cv-nav" href="#" download>descargar CV</a>
@@ -130,6 +131,27 @@
       </div>
     </section>
 
+    <section class="seccion" id="mapa">
+      <div class="marco">
+        <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf05b;</span>~/mapa</p>
+        <h2 class="titulo-seccion" id="globo-titulo"></h2>
+        <p class="prosa texto-grande" id="globo-intro"></p>
+
+        <div class="globo">
+          <div class="globo__lienzo" id="globo-lienzo">
+            <p class="mono globo__aviso" id="globo-aviso" hidden></p>
+          </div>
+          <div class="globo__panel">
+            <p class="mono globo__titulo-lista">
+              <span class="icono" aria-hidden="true">&#xf233;</span>últimos orígenes
+            </p>
+            <ul class="globo__eventos" id="globo-eventos"></ul>
+            <p class="mono globo__nota" id="globo-nota"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="seccion" id="formacion">
       <div class="marco">
         <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf19d;</span>~/formación</p>
@@ -169,5 +191,7 @@
   <script src="js/datos.js"></script>
   <script src="js/app.js"></script>
   <script src="js/fondo.js"></script>
+  <script src="js/globo-puntos.js"></script>
+  <script src="js/globo.js"></script>
 </body>
 </html>

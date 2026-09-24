@@ -239,4 +239,30 @@ const DATOS = {
     ],
   },
 
+  // Sección ~/mapa: globo 3D con los orígenes del ruido de internet.
+  // NO son datos reales de ningún servidor: es una muestra representativa de
+  // los sitios desde los que llega el escaneo de fondo. Si algún día pones
+  // datos de verdad, cámbialo también en la nota de abajo.
+  globo: {
+    titulo: "De dónde viene el ruido",
+    intro:
+      "Cualquier máquina con una IP pública recibe escaneos desde el primer minuto, vengan de donde vengan. Esto es ese ruido de fondo dibujado sobre un globo: cada arco es un origen llamando a una puerta.",
+    nota: "Muestra representativa, no tráfico real.",
+    destino: { nombre: "A Coruña", lat: 43.36, lon: -8.41 },
+    origenes: [
+      { ciudad: "São Paulo", pais: "BR", lat: -23.55, lon: -46.63, tipo: "escaneo de puertos" },
+      { ciudad: "Singapur", pais: "SG", lat: 1.35, lon: 103.82, tipo: "fuerza bruta SSH" },
+      { ciudad: "Fráncfort", pais: "DE", lat: 50.11, lon: 8.68, tipo: "sondeo HTTP" },
+      { ciudad: "Ashburn", pais: "US", lat: 39.04, lon: -77.49, tipo: "escaneo de puertos" },
+      { ciudad: "Moscú", pais: "RU", lat: 55.75, lon: 37.62, tipo: "fuerza bruta RDP" },
+      { ciudad: "Bombay", pais: "IN", lat: 19.08, lon: 72.88, tipo: "sondeo HTTP" },
+      { ciudad: "Hong Kong", pais: "HK", lat: 22.32, lon: 114.17, tipo: "fuerza bruta SSH" },
+      { ciudad: "Lagos", pais: "NG", lat: 6.52, lon: 3.38, tipo: "credenciales por defecto" },
+      { ciudad: "Sídney", pais: "AU", lat: -33.87, lon: 151.21, tipo: "escaneo de puertos" },
+      { ciudad: "Ámsterdam", pais: "NL", lat: 52.37, lon: 4.9, tipo: "sondeo de API" },
+      { ciudad: "Santiago", pais: "CL", lat: -33.45, lon: -70.67, tipo: "fuerza bruta SSH" },
+      { ciudad: "Seúl", pais: "KR", lat: 37.57, lon: 126.98, tipo: "escaneo de puertos" },
+    ],
+  },
+
 };

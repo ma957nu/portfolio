@@ -30,6 +30,16 @@ Son dos capas y ninguna captura el ratón:
 - La rejilla de 48px es CSS puro (`body::before` en `css/estilo.css`).
 - La red de nodos es `js/fondo.js` dibujando sobre un `<canvas>`. Se para sola si la pestaña deja de verse y, si el sistema pide menos movimiento, pinta un fotograma y no anima. Para quitarla, borra la etiqueta `<script src="js/fondo.js">` de `index.html`.
 
+## El globo 3D
+
+La sección `~/mapa` dibuja un globo con three.js: los continentes son puntos, y cada arco es un origen llamando a la puerta de un servidor.
+
+- **Los datos son una muestra, no tráfico real.** Están en `DATOS.globo` dentro de `js/datos.js`: el destino (`destino`) y la lista de orígenes con ciudad, país, coordenadas y tipo de intento. Si algún día pones datos de verdad, cambia también el texto de `nota`, que es el que avisa de que esto es una simulación.
+- **Los continentes** salen de `js/globo-puntos.js`, 2.250 pares de latitud y longitud (27 KB). Se generaron una sola vez a partir del mapa de Natural Earth, muestreando una rejilla y quedándose con los puntos que caen en tierra. No hace falta ninguna imagen ni conexión.
+- **three.js** vive en `js/vendor/` (690 KB) y **solo se descarga cuando la sección se acerca a la pantalla**. Quien entre a leer la experiencia y se vaya no lo paga.
+
+**Al abrir `index.html` con doble clic, el globo no se ve.** three.js es un módulo y el navegador bloquea los módulos cuando la página viene del disco en vez de un servidor. En Netlify funciona con normalidad; en local, la sección enseña un aviso explicándolo y el resto de la web sigue igual. Para verlo en local hace falta levantar un servidor, por ejemplo `npx serve` en esta carpeta.
+
 ## Tipografías e iconos
 
 La mono es **Hack** y los iconos son glifos de **Nerd Fonts**. Las dos se sirven desde `fonts/`, no desde un CDN, y van recortadas a lo que la web usa de verdad:
@@ -75,6 +85,9 @@ css/estilo.css       estilo (tema oscuro, tipografía, layout)
 js/datos.js           todo el contenido editable
 js/app.js              vuelca datos.js en el HTML y mueve el triage
 js/fondo.js             red de nodos del fondo
+js/globo.js              globo 3D de ~/mapa
+js/globo-puntos.js        los continentes, punto a punto
+js/vendor/three.module.js  three.js
 fonts/                   Hack y los iconos, recortadas
 favicon.svg               icono de la pestaña
 apple-touch-icon.png      el mismo icono para iOS
