@@ -6,6 +6,36 @@
 (function () {
   "use strict";
 
+  /*
+   * Iconos de Nerd Fonts. Se pasan por aquí para que siempre salgan con
+   * aria-hidden: quien navegue con lector de pantalla oye el texto de al lado,
+   * no el nombre del glifo.
+   */
+  const ICONOS = {
+    email: 0xf0e0,
+    github: 0xf09b,
+    linkedin: 0xf08c,
+    hackthebox: 0xf023,
+    telefono: 0xf2c2,
+    enlace: 0xf08e,
+    acierto: 0xf00c,
+    fallo: 0xf00d,
+    sistemas: 0xf17c,
+    "identidad y acceso": 0xf084,
+    desarrollo: 0xf121,
+    "en aprendizaje": 0xf02d,
+  };
+
+  function icono(clave) {
+    const punto = typeof clave === "number" ? clave : ICONOS[clave];
+    if (!punto) return null;
+    const span = document.createElement("span");
+    span.className = "icono";
+    span.setAttribute("aria-hidden", "true");
+    span.textContent = String.fromCodePoint(punto);
+    return span;
+  }
+
   function texto(id, valor) {
     const el = document.getElementById(id);
     if (el && valor) el.textContent = valor;
@@ -105,7 +135,9 @@
 
       const titulo = document.createElement("p");
       titulo.className = "mono grupo-stack__titulo";
-      titulo.textContent = grupo.categoria;
+      const icoStack = icono(grupo.categoria);
+      if (icoStack) titulo.appendChild(icoStack);
+      titulo.appendChild(document.createTextNode(grupo.categoria));
 
       const lista = document.createElement("ul");
       lista.className = "grupo-stack__lista";
@@ -207,7 +239,9 @@
         enlace.href = p.enlace;
         enlace.target = "_blank";
         enlace.rel = "noopener noreferrer";
-        enlace.textContent = (p.enlaceEtiqueta || "ver más") + " →";
+        const icoEnlace = icono("enlace");
+        if (icoEnlace) enlace.appendChild(icoEnlace);
+        enlace.appendChild(document.createTextNode(p.enlaceEtiqueta || "ver más"));
         art.appendChild(enlace);
       }
 
@@ -268,9 +302,13 @@
       const acierto = esSospechoso === caso.sospechoso;
       if (acierto) aciertos++;
 
-      veredicto.textContent = acierto
-        ? "correcto · " + (caso.sospechoso ? "sospechoso" : "normal")
-        : "no era eso · " + (caso.sospechoso ? "sospechoso" : "normal");
+      const etiquetaCaso = caso.sospechoso ? "sospechoso" : "normal";
+      veredicto.textContent = "";
+      const icoVeredicto = icono(acierto ? "acierto" : "fallo");
+      if (icoVeredicto) veredicto.appendChild(icoVeredicto);
+      veredicto.appendChild(
+        document.createTextNode((acierto ? "correcto · " : "no era eso · ") + etiquetaCaso)
+      );
       veredicto.className = "mono triage__veredicto " + (acierto ? "triage__veredicto--ok" : "triage__veredicto--fallo");
       explicacion.textContent = caso.explicacion;
 
@@ -388,7 +426,9 @@
       }
       const e = document.createElement("span");
       e.className = "mono fila-contacto__etiqueta";
-      e.textContent = etiqueta;
+      const ico = icono(etiqueta);
+      if (ico) e.appendChild(ico);
+      e.appendChild(document.createTextNode(etiqueta));
       const v = document.createElement("span");
       v.className = "fila-contacto__valor";
       v.textContent = valor;

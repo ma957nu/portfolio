@@ -1,3 +1,35 @@
+/*
+ * Tipografías servidas desde el propio sitio, recortadas a los caracteres que
+ * la web usa: Hack pesa 15 KB por peso en vez de 105, y de los iconos de Nerd
+ * Fonts solo viajan los 22 glifos que aparecen en pantalla (4 KB en lugar de
+ * 2,4 MB). Si algún día añades un icono nuevo, hay que volver a generar
+ * fonts/simbolos-nerd.woff2 incluyendo su punto de código.
+ */
+
+@font-face {
+  font-family: "Hack";
+  src: url("../fonts/hack-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Hack";
+  src: url("../fonts/hack-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Simbolos";
+  src: url("../fonts/simbolos-nerd.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
 /* ---------------------------------------------------------------
    Manuel Pérez · portfolio
    Minimalismo tipo Apple con una capa hacker discreta:
@@ -22,7 +54,7 @@
 
   /* tipografía */
   --fuente-sans: "Inter", -apple-system, "Segoe UI", "Segoe UI Variable", system-ui, sans-serif;
-  --fuente-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+  --fuente-mono: "Hack", ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
 
   /* escala tipográfica, razón ~1.22 */
   --paso-1: 0.8rem;
@@ -645,9 +677,11 @@ a {
 .fila-contacto__etiqueta {
   color: var(--acento);
   font-size: var(--paso-1);
-  width: 90px;
+  /* Con el icono delante, 90px dejaban "hackthebox" partido en dos líneas. */
+  width: 130px;
   flex-shrink: 0;
   text-transform: lowercase;
+  white-space: nowrap;
 }
 
 .fila-contacto__valor {
@@ -845,5 +879,50 @@ body::before {
   .triage__acciones .boton {
     flex: 1 1 auto;
     text-align: center;
+  }
+}
+
+
+/* ============================================================
+   ICONOS (Nerd Fonts)
+   Van siempre con aria-hidden: son adorno, el texto de al lado
+   es el que cuenta lo que hay.
+   ============================================================ */
+
+.icono {
+  font-family: "Simbolos";
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  display: inline-block;
+  margin-right: 0.55em;
+  transform: translateY(0.08em);
+  speak: never;
+}
+
+/* En las etiquetas de sección y en el menú el icono va del color del acento,
+   igual que el texto al que acompaña. */
+.etiqueta .icono,
+.nav .icono {
+  margin-right: 0.45em;
+}
+
+.fila-contacto .icono {
+  color: var(--acento);
+}
+
+.grupo-stack__titulo .icono {
+  color: var(--acento);
+}
+
+.enlace-proyecto .icono {
+  margin-right: 0.4em;
+}
+
+/* En pantallas estrechas el menú ya ocupa varias filas; quitando los iconos
+   vuelve a caber en dos y la cabecera deja de comerse la portada. */
+@media (max-width: 640px) {
+  .nav .icono {
+    display: none;
   }
 }

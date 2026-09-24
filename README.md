@@ -30,6 +30,37 @@ Son dos capas y ninguna captura el ratón:
 - La rejilla de 48px es CSS puro (`body::before` en `css/estilo.css`).
 - La red de nodos es `js/fondo.js` dibujando sobre un `<canvas>`. Se para sola si la pestaña deja de verse y, si el sistema pide menos movimiento, pinta un fotograma y no anima. Para quitarla, borra la etiqueta `<script src="js/fondo.js">` de `index.html`.
 
+## Tipografías e iconos
+
+La mono es **Hack** y los iconos son glifos de **Nerd Fonts**. Las dos se sirven desde `fonts/`, no desde un CDN, y van recortadas a lo que la web usa de verdad:
+
+| archivo | contenido | peso |
+| --- | --- | --- |
+| `hack-regular.woff2` | Hack, solo latín y signos | 15 KB |
+| `hack-bold.woff2` | lo mismo en negrita | 15 KB |
+| `simbolos-nerd.woff2` | los 22 iconos que se usan | 4 KB |
+
+Sin recortar, Hack pesa 105 KB por peso y la fuente de símbolos 2,4 MB.
+
+Un icono se escribe así, y siempre con `aria-hidden` para que un lector de pantalla no lo lea:
+
+```html
+<span class="icono" aria-hidden="true">&#xf007;</span>
+```
+
+En `js/app.js` hay un objeto `ICONOS` con los puntos de código que usan las partes generadas por JavaScript (contacto, stack, proyectos, triage).
+
+**Si añades un icono nuevo hay que regenerar la fuente**, porque el que no esté en el recorte sale como un cuadradito vacío. Hace falta la fuente completa (`SymbolsNerdFont-Regular.ttf` del repositorio de Nerd Fonts) y el paquete `subset-font`:
+
+```js
+import subsetFont from 'subset-font';
+const iconos = [0xf007, 0xf0b1 /* ...y el nuevo */]
+  .map(c => String.fromCodePoint(c)).join('');
+const recortada = await subsetFont(fuenteCompleta, iconos, { targetFormat: 'woff2' });
+```
+
+Las licencias de ambas fuentes están en `fonts/`. Inter se sigue pidiendo a Google Fonts.
+
 ## El icono de la pestaña
 
 `favicon.svg` es el icono que sale en la pestaña del navegador: un prompt `>_` en verde sobre fondo oscuro, dibujado con formas y sin texto, para que se vea igual en cualquier sistema. `apple-touch-icon.png` es el mismo icono a 180px, que es el que usa iOS al guardar la web en la pantalla de inicio.
@@ -44,7 +75,8 @@ css/estilo.css       estilo (tema oscuro, tipografía, layout)
 js/datos.js           todo el contenido editable
 js/app.js              vuelca datos.js en el HTML y mueve el triage
 js/fondo.js             red de nodos del fondo
-favicon.svg              icono de la pestaña
+fonts/                   Hack y los iconos, recortadas
+favicon.svg               icono de la pestaña
 apple-touch-icon.png      el mismo icono para iOS
 netlify.toml               configuración de despliegue y cabeceras
 ```
@@ -58,7 +90,7 @@ sin esos datos, guárdala en `cv/` y pon su ruta en `cv.archivo` dentro de
 
 ## Cabeceras de seguridad
 
-`netlify.toml` fija una CSP que solo permite estilos de Google Fonts y scripts del propio sitio. **No admite scripts ni estilos escritos dentro del HTML**: si añades un `<script>` con código suelto o un `style="..."` en una etiqueta, funcionará en local y fallará en producción. Todo el JavaScript va en archivos dentro de `js/`.
+`netlify.toml` fija una CSP que solo permite estilos de Google Fonts, fuentes del propio sitio y de Google, y scripts del propio sitio. **No admite scripts ni estilos escritos dentro del HTML**: si añades un `<script>` con código suelto o un `style="..."` en una etiqueta, funcionará en local y fallará en producción. Todo el JavaScript va en archivos dentro de `js/`.
 
 ## Desplegar en Netlify
 

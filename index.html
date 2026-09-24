@@ -10,7 +10,7 @@
   <meta name="theme-color" content="#0b0d0e" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/estilo.css" />
 </head>
 <body>
@@ -25,12 +25,12 @@
         <span class="marca__prompt">$</span> manuel<span class="marca__punto">.</span>perez
       </a>
       <nav class="nav" aria-label="Navegación principal">
-        <a href="#sobre-mi">~/sobre-mí</a>
-        <a href="#experiencia">~/experiencia</a>
-        <a href="#stack">~/stack</a>
-        <a href="#proyectos">~/proyectos</a>
-        <a href="#triage">~/triage</a>
-        <a href="#contacto">~/contacto</a>
+        <a href="#sobre-mi"><span class="icono" aria-hidden="true">&#xf007;</span>~/sobre-mí</a>
+        <a href="#experiencia"><span class="icono" aria-hidden="true">&#xf0b1;</span>~/experiencia</a>
+        <a href="#stack"><span class="icono" aria-hidden="true">&#xf1b3;</span>~/stack</a>
+        <a href="#proyectos"><span class="icono" aria-hidden="true">&#xf401;</span>~/proyectos</a>
+        <a href="#triage"><span class="icono" aria-hidden="true">&#xf188;</span>~/triage</a>
+        <a href="#contacto"><span class="icono" aria-hidden="true">&#xf0e0;</span>~/contacto</a>
       </nav>
       <a class="boton boton--linea nav-cv" id="enlace-cv-nav" href="#" download>descargar CV</a>
     </div>
@@ -53,14 +53,14 @@
           <a class="boton boton--linea" href="#contacto">hablemos</a>
         </div>
         <p class="hero__ubicacion">
-          <span class="mono">~</span> <span id="hero-ubicacion"></span>
+          <span class="icono" aria-hidden="true">&#xf041;</span><span id="hero-ubicacion"></span>
         </p>
       </div>
     </section>
 
     <section class="seccion" id="sobre-mi">
       <div class="marco">
-        <p class="etiqueta">~/sobre-mí</p>
+        <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf007;</span>~/sobre-mí</p>
         <h2 class="titulo-seccion">Quién soy</h2>
         <p class="prosa texto-grande" id="sobre-mi-texto"></p>
       </div>
@@ -68,7 +68,7 @@
 
     <section class="seccion" id="experiencia">
       <div class="marco">
-        <p class="etiqueta">~/experiencia</p>
+        <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf0b1;</span>~/experiencia</p>
         <h2 class="titulo-seccion">Trayectoria</h2>
         <div class="lista-experiencia" id="lista-experiencia"></div>
       </div>
@@ -76,12 +76,12 @@
 
     <section class="seccion" id="stack">
       <div class="marco">
-        <p class="etiqueta">~/stack</p>
+        <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf1b3;</span>~/stack</p>
         <h2 class="titulo-seccion">Con qué trabajo</h2>
         <div class="rejilla-stack" id="rejilla-stack"></div>
 
         <div class="objetivos">
-          <p class="etiqueta">~/objetivos</p>
+          <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf041;</span>~/objetivos</p>
           <ul class="lista-objetivos" id="lista-objetivos"></ul>
         </div>
       </div>
@@ -89,7 +89,7 @@
 
     <section class="seccion" id="proyectos">
       <div class="marco">
-        <p class="etiqueta">~/proyectos</p>
+        <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf401;</span>~/proyectos</p>
         <h2 class="titulo-seccion">Lo que he construido</h2>
         <div class="rejilla-proyectos" id="rejilla-proyectos"></div>
       </div>
@@ -97,7 +97,7 @@
 
     <section class="seccion" id="triage">
       <div class="marco">
-        <p class="etiqueta">~/triage</p>
+        <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf188;</span>~/triage</p>
         <h2 class="titulo-seccion" id="triage-titulo"></h2>
         <p class="prosa texto-grande" id="triage-intro"></p>
 
@@ -132,7 +132,7 @@
 
     <section class="seccion" id="formacion">
       <div class="marco">
-        <p class="etiqueta">~/formación</p>
+        <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf19d;</span>~/formación</p>
         <h2 class="titulo-seccion">Formación</h2>
         <div class="lista-formacion" id="lista-formacion"></div>
       </div>
@@ -140,7 +140,7 @@
 
     <section class="seccion" id="idiomas">
       <div class="marco">
-        <p class="etiqueta">~/idiomas</p>
+        <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf0ac;</span>~/idiomas</p>
         <h2 class="titulo-seccion">Idiomas</h2>
         <div class="chips-idiomas" id="chips-idiomas"></div>
       </div>
@@ -148,7 +148,7 @@
 
     <section class="seccion seccion--contacto" id="contacto">
       <div class="marco">
-        <p class="etiqueta">~/contacto</p>
+        <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf0e0;</span>~/contacto</p>
         <h2 class="titulo-seccion">Hablemos</h2>
         <p class="prosa texto-grande">
           Si buscas a alguien para el equipo de seguridad, o simplemente quieres comentar algo del stack, escríbeme.
