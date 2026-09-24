@@ -30,6 +30,17 @@ Son dos capas y ninguna captura el ratón:
 - La rejilla de 48px es CSS puro (`body::before` en `css/estilo.css`).
 - La red de nodos es `js/fondo.js` dibujando sobre un `<canvas>`. Se para sola si la pestaña deja de verse y, si el sistema pide menos movimiento, pinta un fotograma y no anima. Para quitarla, borra la etiqueta `<script src="js/fondo.js">` de `index.html`.
 
+## Las direcciones de las secciones
+
+Cada sección tiene su propia URL, sin almohadilla: `/consola`, `/mapa`, `/triage`... En el HTML los enlaces siguen siendo anclas normales (`href="#mapa"`), que es lo que funciona en todas partes, incluido abrir el archivo con doble clic. Lo que hace que la barra de direcciones quede limpia son dos piezas:
+
+1. **Las reglas de `netlify.toml`**: cada sección se sirve como `index.html` con estado 200, sin redirección visible. Van listadas una a una a propósito: con un comodín, cualquier URL inventada devolvería la portada en lugar de un 404.
+2. **El enrutador de `js/app.js`** (`activarRutas`): al pulsar un enlace cambia la URL con `history.pushState` y baja a la sección; al entrar directamente en `/consola` lee la ruta y baja sola; y el botón de atrás del navegador funciona.
+
+**Si añades una sección nueva, hay que añadir también su regla en `netlify.toml`.** Si se olvida, el enlace del menú seguirá funcionando, pero compartir esa URL o recargar la página dará un 404.
+
+Abierta desde el disco (`file://`) no hay rutas que valgan, así que el enrutador se queda quieto y los enlaces funcionan como anclas de toda la vida.
+
 ## La consola de pega
 
 La sección `~/consola` es una terminal falsa para quien llegue con ganas de probar cosas. No ejecuta nada: compara lo escrito contra una lista de expresiones regulares y responde con texto.

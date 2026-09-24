@@ -12,3 +12,59 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     Content-Security-Policy = "default-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+
+# Las secciones tienen URL propia sin almohadilla: /consola en vez de
+# /#consola. Se sirven como la misma página (estado 200, no 301), y el
+# enrutador de js/app.js se encarga de bajar hasta la sección al cargar.
+# Se listan una a una a propósito: con un comodín, cualquier URL inventada
+# devolvería la portada en vez de un 404.
+
+[[redirects]]
+  from = "/sobre-mi"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/experiencia"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/stack"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/proyectos"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/triage"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/consola"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/mapa"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/formacion"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/idiomas"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/contacto"
+  to = "/index.html"
+  status = 200

@@ -476,6 +476,65 @@
     fila("hackthebox", c.hackthebox ? "perfil público" : "", c.hackthebox);
   }
 
+  /*
+   * Enrutador. Los enlaces del menú siguen siendo anclas (#mapa) en el HTML,
+   * porque es lo que funciona en cualquier sitio, incluido abrir el archivo
+   * con doble clic. Cuando la web se sirve por http, además se reescribe la
+   * barra de direcciones a /mapa, sin almohadilla, apoyándose en las reglas
+   * de netlify.toml que sirven esas rutas como esta misma página.
+   */
+  function activarRutas() {
+    const enSitioWeb = location.protocol === "http:" || location.protocol === "https:";
+    const suave = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function seccionDe(id) {
+      if (!id) return null;
+      const destino = document.getElementById(id);
+      // Solo las secciones tienen ruta propia: el enlace de "saltar al
+      // contenido" apunta al <main> y ese no debe cambiar la URL.
+      return destino && destino.tagName === "SECTION" ? destino : null;
+    }
+
+    function irA(id, cambiarUrl) {
+      const destino = seccionDe(id);
+      if (!destino) return false;
+      // La URL se cambia ANTES de desplazarse. El navegador guarda la posición
+      // actual en la entrada que deja atrás: si primero bajásemos y luego
+      // cambiáramos la URL, el botón de atrás devolvería la posición nueva.
+      if (enSitioWeb && cambiarUrl) {
+        history.pushState({ seccion: id }, "", id === "inicio" ? "/" : "/" + id);
+      }
+      destino.scrollIntoView({ behavior: suave ? "smooth" : "auto", block: "start" });
+      return true;
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (enlace) {
+      enlace.addEventListener("click", function (e) {
+        const id = enlace.getAttribute("href").slice(1);
+        if (irA(id, true)) e.preventDefault();
+      });
+    });
+
+    // "/consola/" -> "consola". Sin expresión regular, que con las barras se
+    // lee peor de lo que ayuda.
+    function rutaActual() {
+      const trozos = location.pathname.split("/").filter(Boolean);
+      return trozos.length ? trozos[trozos.length - 1] : "";
+    }
+
+    window.addEventListener("popstate", function () {
+      irA(rutaActual() || "inicio", false);
+    });
+
+    // Al entrar directamente en /consola hay que bajar hasta ahí.
+    const inicial = rutaActual();
+    if (inicial && seccionDe(inicial)) {
+      window.requestAnimationFrame(function () {
+        seccionDe(inicial).scrollIntoView({ behavior: "auto", block: "start" });
+      });
+    }
+  }
+
   function pintarPie() {
     texto("pie-anio", String(new Date().getFullYear()));
   }
@@ -515,5 +574,6 @@
     pintarContacto();
     pintarPie();
     activarRevelado();
+    activarRutas();
   });
 })();
