@@ -1,0 +1,12 @@
+# SO
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# editores
+.vscode/
+.idea/
+
+# capturas o pruebas locales
+*.tmp
+scratch/

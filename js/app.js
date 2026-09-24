@@ -1,0 +1,319 @@
+/*
+ * Toma el contenido de js/datos.js y lo vuelca en el HTML.
+ * No hay build step: esto es JS plano pensado para abrirse con file://.
+ */
+
+(function () {
+  "use strict";
+
+  function texto(id, valor) {
+    const el = document.getElementById(id);
+    if (el && valor) el.textContent = valor;
+  }
+
+  function pintarCabecera() {
+    document.title = DATOS.meta.titulo;
+    const meta = document.querySelector('meta[name="descripcion"]');
+    if (meta) meta.setAttribute("content", DATOS.meta.descripcion);
+
+    texto("hero-eyebrow", DATOS.perfil.eyebrow);
+    texto("hero-nombre", DATOS.perfil.nombre);
+    texto("hero-rol", DATOS.perfil.rol);
+    texto("hero-objetivo", DATOS.perfil.objetivo);
+    texto("hero-resumen", DATOS.perfil.resumen);
+    texto("hero-ubicacion", DATOS.perfil.ubicacion);
+    texto("sobre-mi-texto", DATOS.perfil.resumen);
+
+    const cv = DATOS.cv.archivo;
+    ["enlace-cv-nav", "enlace-cv-hero"].forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el && cv) {
+        el.setAttribute("href", cv);
+        el.textContent = DATOS.cv.etiqueta || "descargar CV";
+      } else if (el) {
+        el.remove();
+      }
+    });
+  }
+
+  function pintarExperiencia() {
+    const cont = document.getElementById("lista-experiencia");
+    if (!cont) return;
+    DATOS.experiencia.forEach(function (item) {
+      const art = document.createElement("article");
+      art.className = "tarjeta-experiencia";
+
+      const cabecera = document.createElement("div");
+      cabecera.className = "tarjeta-experiencia__cabecera";
+
+      const titulos = document.createElement("div");
+      const puesto = document.createElement("h3");
+      puesto.className = "tarjeta-experiencia__puesto";
+      puesto.textContent = item.puesto;
+      const empresa = document.createElement("p");
+      empresa.className = "mono tarjeta-experiencia__empresa";
+      empresa.textContent = item.empresa + (item.contexto ? " · " + item.contexto : "");
+      titulos.appendChild(puesto);
+      titulos.appendChild(empresa);
+
+      const periodo = document.createElement("p");
+      periodo.className = "mono tarjeta-experiencia__periodo";
+      periodo.textContent = item.periodo;
+
+      cabecera.appendChild(titulos);
+      cabecera.appendChild(periodo);
+
+      const desc = document.createElement("p");
+      desc.className = "prosa tarjeta-experiencia__descripcion";
+      desc.textContent = item.descripcion;
+
+      art.appendChild(cabecera);
+      art.appendChild(desc);
+
+      if (item.etiquetas && item.etiquetas.length) {
+        const etiquetas = document.createElement("ul");
+        etiquetas.className = "etiquetas";
+        item.etiquetas.forEach(function (e) {
+          const li = document.createElement("li");
+          li.className = "mono etiqueta-chip";
+          li.textContent = e;
+          etiquetas.appendChild(li);
+        });
+        art.appendChild(etiquetas);
+      }
+
+      cont.appendChild(art);
+    });
+  }
+
+  function pintarStack() {
+    const cont = document.getElementById("rejilla-stack");
+    if (!cont) return;
+    DATOS.stack.forEach(function (grupo) {
+      const bloque = document.createElement("div");
+      bloque.className = "grupo-stack";
+
+      const titulo = document.createElement("p");
+      titulo.className = "mono grupo-stack__titulo";
+      titulo.textContent = grupo.categoria;
+
+      const lista = document.createElement("ul");
+      lista.className = "grupo-stack__lista";
+      grupo.items.forEach(function (item) {
+        const li = document.createElement("li");
+        li.textContent = item;
+        lista.appendChild(li);
+      });
+
+      bloque.appendChild(titulo);
+      bloque.appendChild(lista);
+      cont.appendChild(bloque);
+    });
+
+    const listaObjetivos = document.getElementById("lista-objetivos");
+    if (listaObjetivos && DATOS.objetivos) {
+      DATOS.objetivos.forEach(function (obj) {
+        const li = document.createElement("li");
+        li.textContent = obj;
+        listaObjetivos.appendChild(li);
+      });
+    }
+  }
+
+  function pintarProyectos() {
+    const cont = document.getElementById("rejilla-proyectos");
+    if (!cont) return;
+    DATOS.proyectos.forEach(function (p) {
+      const art = document.createElement("article");
+      art.className = "tarjeta-proyecto" + (p.destacado ? " tarjeta-proyecto--destacado" : "");
+
+      const cabecera = document.createElement("div");
+      cabecera.className = "tarjeta-proyecto__cabecera";
+      const nombre = document.createElement("h3");
+      nombre.textContent = p.nombre;
+      cabecera.appendChild(nombre);
+      if (p.destacado) {
+        const marca = document.createElement("span");
+        marca.className = "mono marca-destacado";
+        marca.textContent = "proyecto propio";
+        cabecera.appendChild(marca);
+      }
+      art.appendChild(cabecera);
+
+      const resumen = document.createElement("p");
+      resumen.className = "prosa tarjeta-proyecto__resumen";
+      resumen.textContent = p.resumen;
+      art.appendChild(resumen);
+
+      if (p.problema) {
+        const bloqueProblema = document.createElement("p");
+        bloqueProblema.className = "prosa tarjeta-proyecto__bloque";
+        const etiqueta = document.createElement("span");
+        etiqueta.className = "mono tarjeta-proyecto__etiqueta";
+        etiqueta.textContent = "problema ";
+        bloqueProblema.appendChild(etiqueta);
+        bloqueProblema.appendChild(document.createTextNode(p.problema));
+        art.appendChild(bloqueProblema);
+      }
+
+      if (p.resultado) {
+        const bloqueResultado = document.createElement("p");
+        bloqueResultado.className = "prosa tarjeta-proyecto__bloque";
+        const etiqueta = document.createElement("span");
+        etiqueta.className = "mono tarjeta-proyecto__etiqueta";
+        etiqueta.textContent = "resultado ";
+        bloqueResultado.appendChild(etiqueta);
+        bloqueResultado.appendChild(document.createTextNode(p.resultado));
+        art.appendChild(bloqueResultado);
+      }
+
+      if (p.stack && p.stack.length) {
+        const etiquetas = document.createElement("ul");
+        etiquetas.className = "etiquetas";
+        p.stack.forEach(function (s) {
+          const li = document.createElement("li");
+          li.className = "mono etiqueta-chip";
+          li.textContent = s;
+          etiquetas.appendChild(li);
+        });
+        art.appendChild(etiquetas);
+      }
+
+      if (p.enlace) {
+        const enlace = document.createElement("a");
+        enlace.className = "enlace-proyecto";
+        enlace.href = p.enlace;
+        enlace.target = "_blank";
+        enlace.rel = "noopener noreferrer";
+        enlace.textContent = (p.enlaceEtiqueta || "ver más") + " →";
+        art.appendChild(enlace);
+      }
+
+      cont.appendChild(art);
+    });
+  }
+
+  function pintarFormacion() {
+    const cont = document.getElementById("lista-formacion");
+    if (!cont) return;
+    DATOS.formacion.forEach(function (f) {
+      const art = document.createElement("article");
+      art.className = "tarjeta-formacion";
+
+      const cabecera = document.createElement("div");
+      cabecera.className = "tarjeta-formacion__cabecera";
+      const titulo = document.createElement("h3");
+      titulo.textContent = f.titulo;
+      cabecera.appendChild(titulo);
+      if (f.periodo) {
+        const periodo = document.createElement("span");
+        periodo.className = "mono tarjeta-formacion__periodo";
+        periodo.textContent = f.periodo;
+        cabecera.appendChild(periodo);
+      }
+      art.appendChild(cabecera);
+
+      if (f.centro) {
+        const centro = document.createElement("p");
+        centro.className = "mono tarjeta-formacion__centro";
+        centro.textContent = f.centro;
+        art.appendChild(centro);
+      }
+
+      if (f.detalle) {
+        const detalle = document.createElement("p");
+        detalle.className = "prosa tarjeta-formacion__detalle";
+        detalle.textContent = f.detalle;
+        art.appendChild(detalle);
+      }
+
+      cont.appendChild(art);
+    });
+  }
+
+  function pintarIdiomas() {
+    const cont = document.getElementById("chips-idiomas");
+    if (!cont) return;
+    DATOS.idiomas.forEach(function (i) {
+      const chip = document.createElement("div");
+      chip.className = "chip-idioma";
+      const idioma = document.createElement("span");
+      idioma.textContent = i.idioma;
+      const nivel = document.createElement("span");
+      nivel.className = "mono chip-idioma__nivel";
+      nivel.textContent = i.nivel;
+      chip.appendChild(idioma);
+      chip.appendChild(nivel);
+      cont.appendChild(chip);
+    });
+  }
+
+  function pintarContacto() {
+    const cont = document.getElementById("enlaces-contacto");
+    if (!cont) return;
+    const c = DATOS.contacto;
+
+    function fila(etiqueta, valor, href) {
+      if (!valor) return;
+      const a = document.createElement("a");
+      a.className = "fila-contacto";
+      a.href = href;
+      if (href.indexOf("http") === 0) {
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+      }
+      const e = document.createElement("span");
+      e.className = "mono fila-contacto__etiqueta";
+      e.textContent = etiqueta;
+      const v = document.createElement("span");
+      v.className = "fila-contacto__valor";
+      v.textContent = valor;
+      a.appendChild(e);
+      a.appendChild(v);
+      cont.appendChild(a);
+    }
+
+    fila("email", c.email, "mailto:" + c.email);
+    fila("teléfono", c.telefono, "tel:" + c.telefono);
+    fila("github", "ma957nu", c.github);
+    fila("linkedin", c.linkedin ? "linkedin" : "", c.linkedin);
+  }
+
+  function pintarPie() {
+    texto("pie-anio", String(new Date().getFullYear()));
+  }
+
+  function activarRevelado() {
+    const objetivos = document.querySelectorAll(
+      ".seccion, .tarjeta-experiencia, .tarjeta-proyecto, .tarjeta-formacion, .grupo-stack"
+    );
+    if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      objetivos.forEach(function (el) { el.classList.add("visible"); });
+      return;
+    }
+    const observador = new IntersectionObserver(
+      function (entradas) {
+        entradas.forEach(function (entrada) {
+          if (entrada.isIntersecting) {
+            entrada.target.classList.add("visible");
+            observador.unobserve(entrada.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    objetivos.forEach(function (el) { observador.observe(el); });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    pintarCabecera();
+    pintarExperiencia();
+    pintarStack();
+    pintarProyectos();
+    pintarFormacion();
+    pintarIdiomas();
+    pintarContacto();
+    pintarPie();
+    activarRevelado();
+  });
+})();

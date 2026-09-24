@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manuel Pérez · Administración de sistemas y ciberseguridad</title>
+  <meta name="description" content="Portfolio de Manuel Pérez, administrador de sistemas y redes orientado a ciberseguridad." />
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/estilo.css" />
+</head>
+<body>
+
+  <a class="salto" href="#contenido">saltar al contenido</a>
+
+  <header class="cabecera">
+    <div class="cabecera__marco">
+      <a class="marca" href="#inicio">
+        <span class="marca__prompt">$</span> manuel<span class="marca__punto">.</span>perez
+      </a>
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="#sobre-mi">~/sobre-mí</a>
+        <a href="#experiencia">~/experiencia</a>
+        <a href="#stack">~/stack</a>
+        <a href="#proyectos">~/proyectos</a>
+        <a href="#contacto">~/contacto</a>
+      </nav>
+      <a class="boton boton--linea nav-cv" id="enlace-cv-nav" href="#" download>descargar CV</a>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <section class="hero" id="inicio">
+      <div class="marco">
+        <p class="etiqueta" id="hero-eyebrow"></p>
+        <h1 class="hero__titulo">
+          <span id="hero-nombre"></span>
+        </h1>
+        <p class="hero__rol">
+          <span id="hero-rol"></span> <span class="hero__separador">·</span> <span id="hero-objetivo"></span>
+        </p>
+        <p class="hero__resumen prosa" id="hero-resumen"></p>
+        <div class="hero__acciones">
+          <a class="boton boton--primario" id="enlace-cv-hero" href="#" download>descargar CV</a>
+          <a class="boton boton--linea" href="#contacto">hablemos</a>
+        </div>
+        <p class="hero__ubicacion">
+          <span class="mono">~</span> <span id="hero-ubicacion"></span>
+        </p>
+      </div>
+    </section>
+
+    <section class="seccion" id="sobre-mi">
+      <div class="marco">
+        <p class="etiqueta">~/sobre-mí</p>
+        <h2 class="titulo-seccion">Quién soy</h2>
+        <p class="prosa texto-grande" id="sobre-mi-texto"></p>
+      </div>
+    </section>
+
+    <section class="seccion" id="experiencia">
+      <div class="marco">
+        <p class="etiqueta">~/experiencia</p>
+        <h2 class="titulo-seccion">Trayectoria</h2>
+        <div class="lista-experiencia" id="lista-experiencia"></div>
+      </div>
+    </section>
+
+    <section class="seccion" id="stack">
+      <div class="marco">
+        <p class="etiqueta">~/stack</p>
+        <h2 class="titulo-seccion">Con qué trabajo</h2>
+        <div class="rejilla-stack" id="rejilla-stack"></div>
+
+        <div class="objetivos">
+          <p class="etiqueta">~/objetivos</p>
+          <ul class="lista-objetivos" id="lista-objetivos"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="seccion" id="proyectos">
+      <div class="marco">
+        <p class="etiqueta">~/proyectos</p>
+        <h2 class="titulo-seccion">Lo que he construido</h2>
+        <div class="rejilla-proyectos" id="rejilla-proyectos"></div>
+      </div>
+    </section>
+
+    <section class="seccion" id="formacion">
+      <div class="marco">
+        <p class="etiqueta">~/formación</p>
+        <h2 class="titulo-seccion">Formación</h2>
+        <div class="lista-formacion" id="lista-formacion"></div>
+      </div>
+    </section>
+
+    <section class="seccion" id="idiomas">
+      <div class="marco">
+        <p class="etiqueta">~/idiomas</p>
+        <h2 class="titulo-seccion">Idiomas</h2>
+        <div class="chips-idiomas" id="chips-idiomas"></div>
+      </div>
+    </section>
+
+    <section class="seccion seccion--contacto" id="contacto">
+      <div class="marco">
+        <p class="etiqueta">~/contacto</p>
+        <h2 class="titulo-seccion">Hablemos</h2>
+        <p class="prosa texto-grande">
+          Si buscas a alguien para el equipo de seguridad, o simplemente quieres comentar algo del stack, escríbeme.
+        </p>
+        <div class="enlaces-contacto" id="enlaces-contacto"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <div class="marco pie__marco">
+      <p class="mono pie__linea">© <span id="pie-anio"></span> Manuel Pérez</p>
+      <p class="mono pie__linea">A Coruña, España</p>
+    </div>
+  </footer>
+
+  <script src="js/datos.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
