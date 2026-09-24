@@ -1,0 +1,14 @@
+# Sitio estático: no hay nada que compilar, Netlify publica la raíz del repo.
+[build]
+  publish = "."
+
+# Cabeceras de seguridad. Para un portfolio de ciberseguridad conviene que la
+# propia web pase un escáner básico sin pegas.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
