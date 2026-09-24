@@ -35,7 +35,7 @@ Son dos capas y ninguna captura el ratón:
 La sección `~/mapa` dibuja un globo con three.js: los continentes son puntos, y cada arco es un origen llamando a la puerta de un servidor.
 
 - **Los datos son una muestra, no tráfico real.** Están en `DATOS.globo` dentro de `js/datos.js`: el destino (`destino`) y la lista de orígenes con ciudad, país, coordenadas y tipo de intento. Si algún día pones datos de verdad, cambia también el texto de `nota`, que es el que avisa de que esto es una simulación.
-- **Los continentes** salen de `js/globo-puntos.js`, 2.250 pares de latitud y longitud (27 KB). Se generaron una sola vez a partir del mapa de Natural Earth, muestreando una rejilla y quedándose con los puntos que caen en tierra. No hace falta ninguna imagen ni conexión.
+- **Los continentes** salen de `js/globo-puntos.js`, 2.456 pares de latitud y longitud (29 KB), Antártida incluida. Se generaron una sola vez a partir del mapa de Natural Earth, muestreando una rejilla y quedándose con los puntos que caen en tierra. Las filas se separan más según se acercan a los polos, donde los meridianos se juntan: sin eso, la Antártida acaba con un amasijo de puntos en el centro. No hace falta ninguna imagen ni conexión.
 - **three.js** vive en `js/vendor/` (690 KB) y **solo se descarga cuando la sección se acerca a la pantalla**. Quien entre a leer la experiencia y se vaya no lo paga.
 
 **Al abrir `index.html` con doble clic, el globo no se ve.** three.js es un módulo y el navegador bloquea los módulos cuando la página viene del disco en vez de un servidor. En Netlify funciona con normalidad; en local, la sección enseña un aviso explicándolo y el resto de la web sigue igual. Para verlo en local hace falta levantar un servidor, por ejemplo `npx serve` en esta carpeta.
@@ -46,14 +46,16 @@ Tres fuentes, las tres servidas desde `fonts/` y recortadas a lo que la web usa.
 
 | archivo | para qué | peso |
 | --- | --- | --- |
-| `departure-mono.woff2` | titulares (fuente de píxeles) | 4,8 KB |
+| `departure-mono.woff2` | solo la sección ~/mapa (fuente de píxeles) | 4,8 KB |
 | `hack-regular.woff2` | todo el texto | 15 KB |
 | `hack-bold.woff2` | lo mismo en negrita | 15 KB |
 | `simbolos-nerd.woff2` | los 26 iconos que se usan | 4,3 KB |
 
 Sin recortar, Hack pesa 105 KB por peso y la fuente de símbolos 2,4 MB.
 
-Departure Mono solo tiene un grosor, así que los titulares llevan `font-weight: 400`: pedirle negrita haría que el navegador se la invente y los píxeles se emborronan. El texto corrido va en Hack con `line-height: 1.75`, más aire del normal, porque un párrafo monoespaciado cansa más que uno en sans.
+Departure Mono se usa **solo dentro de `#mapa`**: el título de la sección y los textos del panel del globo, que es donde una pantalla de vigilancia pega. El párrafo de entrada de esa sección se queda en Hack, porque son cuatro líneas seguidas y en píxeles se leen peor. El resto de la web va en Hack de principio a fin.
+
+Departure Mono solo tiene un grosor, así que va con `font-weight: 400`: pedirle negrita haría que el navegador se la invente y los píxeles se emborronan. El texto corrido lleva `line-height: 1.75`, más aire del normal, porque un párrafo monoespaciado cansa más que uno en sans.
 
 Si prefieres volver a una sans para el texto corrido, es una línea: cambia `--fuente-sans` en `css/estilo.css`.
 

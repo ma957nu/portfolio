@@ -169,10 +169,9 @@ a {
 }
 
 .titulo-seccion {
-  font-family: var(--fuente-titulo);
   font-size: var(--paso3);
-  font-weight: 400;
-  letter-spacing: 0.01em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   margin: 0 0 var(--s4);
 }
 
@@ -285,11 +284,10 @@ a {
 }
 
 .hero__titulo {
-  font-family: var(--fuente-titulo);
   font-size: var(--paso5);
   line-height: 1.1;
-  font-weight: 400;
-  letter-spacing: 0.01em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   margin: 0 0 var(--s2);
 }
 
@@ -1074,4 +1072,30 @@ body::before {
 
 .globo__evento-tipo .icono {
   margin-right: 0.45em;
+}
+
+
+/* ============================================================
+   LA FUENTE DE PÍXELES, SOLO EN ~/mapa
+   Es el rincón donde encaja: una pantalla de vigilancia. En el resto
+   de la web haría ruido y costaría leerla.
+   El párrafo de entrada se queda en Hack: son cuatro líneas seguidas y
+   en píxeles se leen peor.
+   ============================================================ */
+
+#mapa .titulo-seccion,
+#mapa .globo__titulo-lista,
+#mapa .globo__evento-origen,
+#mapa .globo__evento-tipo,
+#mapa .globo__destino,
+#mapa .globo__nota,
+#mapa .globo__aviso {
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+#mapa .titulo-seccion {
+  /* Departure Mono pinta más pequeño que Hack al mismo tamaño en px. */
+  font-size: calc(var(--paso3) * 1.08);
 }
