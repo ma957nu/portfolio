@@ -265,4 +265,155 @@ const DATOS = {
     ],
   },
 
+  // Sección ~/consola: una terminal de mentira para quien llegue con ganas de
+  // probar cosas. NADA se ejecuta ni se envía a ningún sitio; solo se compara
+  // lo escrito contra esta lista y se responde con texto.
+  //
+  // "patron" es una expresión regular normal y corriente. El primer patrón que
+  // encaja gana, así que el orden importa: los comandos van antes que los
+  // patrones de ataque, o 'cat' acabaría capturado por el de inyección.
+  consola: {
+    titulo: "Adelante, intenta romperlo",
+    intro:
+      "Casi todo el que abre las herramientas de desarrollador en una web ajena acaba probando lo mismo. Si eres de esos, aquí tienes una consola para desahogarte. Escribe lo que quieras.",
+    aviso: "Nada sale de tu navegador. No hay servidor detrás, ni base de datos, ni registro de lo que escribes.",
+    bienvenida: [
+      "consola de invitado · sin privilegios y sin nada que romper",
+      "escribe 'ayuda' si no sabes por dónde empezar",
+    ],
+    respuestas: [
+      {
+        patron: /^(ayuda|help)$/i,
+        texto: [
+          "comandos: ls · cat <fichero> · whoami · limpiar",
+          "y lo que de verdad has venido a probar: inyección SQL, XSS, LFI, SSTI, RCE...",
+          "ninguno va a funcionar, pero todos tienen respuesta.",
+        ],
+      },
+      {
+        patron: /^ls(\s|$)/i,
+        texto: [
+          "curriculum.pdf        no publicado, lleva mi dirección",
+          "notas-del-master.md   sin ordenar, como todos los apuntes",
+          "no-mires-aqui.txt     0 bytes de tentación",
+        ],
+      },
+      {
+        patron: /^cat\s+no-mires-aqui/i,
+        texto: [
+          "Has mirado. Era previsible, pero has mirado.",
+          "FLAG{la_curiosidad_es_media_carrera}",
+          "Pégala aquí arriba y te digo qué hacer con ella.",
+        ],
+      },
+      {
+        patron: /^cat\s+\/etc\/(passwd|shadow)/i,
+        texto: [
+          "No hay sistema de ficheros al otro lado, pero te lo resumo:",
+          "un usuario que se llama manuel y treinta cuentas de sistema aburridísimas.",
+          "El shadow no, que ese no se enseña ni de broma.",
+        ],
+      },
+      {
+        patron: /^cat(\s|$)/i,
+        texto: ["No existe ese fichero. Prueba con ls, que para eso está."],
+      },
+      {
+        patron: /^(whoami|id)$/i,
+        texto: [
+          "Alguien con curiosidad y una consola delante.",
+          "Ya es más de lo que hace casi todo el que pasa por aquí.",
+        ],
+      },
+      {
+        patron: /^sudo/i,
+        texto: [
+          "manuel no está en el fichero de sudoers. Este incidente será reportado.",
+          "(mentira, no hay nada que reportar, pero llevaba años queriendo escribir esa frase)",
+        ],
+      },
+      {
+        patron: /(rm\s+-rf|mkfs|dd\s+if=)/i,
+        texto: [
+          "Aquí no hay nada que borrar.",
+          "Y si algún día te pasa de verdad en una máquina que importe, lo grave nunca es el comando: es descubrir que la copia de seguridad llevaba tres meses fallando en silencio.",
+        ],
+      },
+      {
+        patron: /(<script|onerror\s*=|onload\s*=|javascript:|<img|<svg)/i,
+        texto: [
+          "Ahí está tu payload, escrito tal cual y sin ejecutar.",
+          "Esto se pinta con textContent en lugar de innerHTML. Una palabra de diferencia en el código, y la diferencia entre una web tranquila y una llamada del SOC un domingo.",
+        ],
+      },
+      {
+        patron: /(union\s+select|or\s+1\s*=\s*1|'\s*or\s*'|sleep\(|benchmark\()/i,
+        texto: [
+          "Un clásico, y encima bien escrito.",
+          "El problema es que detrás de esta web no hay base de datos: son cuatro ficheros estáticos servidos por un CDN. Lo más parecido a una consulta por aquí es el Ctrl+F del navegador.",
+        ],
+      },
+      {
+        patron: /(;|\||&&|\$\(|`)\s*(ls|cat|id|whoami|curl|wget|nc|bash|sh|python|powershell)/i,
+        texto: [
+          "Inyección de comandos de manual. El problema es el de siempre aquí: no hay shell al otro lado.",
+          "Esto es JavaScript corriendo en tu máquina. El único ordenador que puedes comprometer desde esta caja es el tuyo.",
+        ],
+      },
+      {
+        patron: /(\.\.\/|%2e%2e|\/etc\/|\\windows\\)/i,
+        texto: [
+          "Has subido seis carpetas y has llegado a la raíz de... tu propio navegador.",
+          "El recorrido de rutas necesita que alguien, al otro lado, abra el fichero que le pidas. Aquí no hay nadie al otro lado.",
+        ],
+      },
+      {
+        patron: /(\$\{jndi:|log4j)/i,
+        texto: [
+          "Aquí no hay Java por ninguna parte.",
+          "Aun así, respeto: ese susto nos tuvo a muchos parcheando en Nochebuena.",
+        ],
+      },
+      {
+        patron: /(\{\{.*\}\}|<%=)/i,
+        texto: [
+          "Si buscabas un 49, ahí lo tienes: 49.",
+          "Pero lo escribí yo a mano antes de publicar esto. Ninguna plantilla, ningún motor, ningún servidor evaluando nada.",
+        ],
+      },
+      {
+        patron: /(nmap|sqlmap|nikto|metasploit|hydra|gobuster|ffuf)/i,
+        texto: [
+          "Buena herramienta. Mal objetivo.",
+          "Esto es alojamiento estático: no hay puertos que escanear ni formularios que fuzzear. Lo único que vas a encontrar es la caché del CDN.",
+        ],
+      },
+      {
+        patron: /(admin|root)\s*[:/]\s*(admin|root|1234|password|toor)/i,
+        texto: [
+          "Credenciales por defecto. Siguen entrando en más sitios de los que nos gustaría, pero aquí no hay ni pantalla de acceso.",
+          "Si se te ha ocurrido porque las tienes en algo del trabajo, ve a cambiarlas antes que nada.",
+        ],
+      },
+      {
+        patron: /FLAG\{la_curiosidad_es_media_carrera\}/i,
+        texto: [
+          "Esa es. Y no estaba en la página: estaba detrás de un comando que había que encontrar primero.",
+          "Escríbeme y cuéntamelo. La gente que va abriendo cosas por curiosidad es justo con la que me gusta trabajar.",
+        ],
+      },
+      {
+        patron: /^(exit|quit|salir)$/i,
+        texto: ["No hay sesión de la que salir. Pero gracias por el detalle."],
+      },
+    ],
+    porDefecto: [
+      "No conozco ese comando. Prueba con 'ayuda'.",
+      "Nada. Esta consola es de cartón piedra, recuerda.",
+      "Sigo aquí, sin ejecutar absolutamente nada de lo que escribes.",
+      "Si buscas un fallo de verdad, no está en esta caja de texto. El código fuente está entero en GitHub.",
+    ],
+    pie: "¿Y si encuentras algo de verdad? Escríbeme antes de contarlo por ahí. Te lo agradeceré, y te lo diré por escrito.",
+  },
+
 };

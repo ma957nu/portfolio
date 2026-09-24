@@ -356,6 +356,22 @@
   }
 
   /* Textos de la sección del globo. El 3D lo monta js/globo.js. */
+  /* Textos de la consola de pega. La terminal la mueve js/consola.js. */
+  function pintarConsola() {
+    const seccion = document.getElementById("consola");
+    if (!seccion) return;
+    if (!DATOS.consola) {
+      seccion.remove();
+      const enlace = document.querySelector('.nav a[href="#consola"]');
+      if (enlace) enlace.remove();
+      return;
+    }
+    texto("consola-titulo", DATOS.consola.titulo);
+    texto("consola-intro", DATOS.consola.intro);
+    texto("consola-aviso", DATOS.consola.aviso);
+    texto("consola-pie", DATOS.consola.pie);
+  }
+
   function pintarGlobo() {
     const seccion = document.getElementById("mapa");
     if (!seccion) return;
@@ -492,6 +508,7 @@
     pintarStack();
     pintarProyectos();
     pintarTriage();
+    pintarConsola();
     pintarGlobo();
     pintarFormacion();
     pintarIdiomas();

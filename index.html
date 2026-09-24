@@ -12,6 +12,12 @@
 </head>
 <body>
 
+  <!--
+    Si has llegado hasta aquí mirando el código, ya sabes por dónde va esto.
+    La pista de verdad no está en este comentario: está en la consola,
+    detrás de un ls.
+  -->
+
   <canvas id="fondo-red" aria-hidden="true"></canvas>
 
   <a class="salto" href="#contenido">saltar al contenido</a>
@@ -27,6 +33,7 @@
         <a href="#stack"><span class="icono" aria-hidden="true">&#xf1b3;</span>~/stack</a>
         <a href="#proyectos"><span class="icono" aria-hidden="true">&#xf401;</span>~/proyectos</a>
         <a href="#triage"><span class="icono" aria-hidden="true">&#xf188;</span>~/triage</a>
+        <a href="#consola"><span class="icono" aria-hidden="true">&#xf120;</span>~/consola</a>
         <a href="#mapa"><span class="icono" aria-hidden="true">&#xf05b;</span>~/mapa</a>
         <a href="#contacto"><span class="icono" aria-hidden="true">&#xf0e0;</span>~/contacto</a>
       </nav>
@@ -128,6 +135,41 @@
       </div>
     </section>
 
+    <section class="seccion" id="consola">
+      <div class="marco">
+        <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf120;</span>~/consola</p>
+        <h2 class="titulo-seccion" id="consola-titulo"></h2>
+        <p class="prosa texto-grande" id="consola-intro"></p>
+
+        <div class="consola">
+          <div class="consola__barra">
+            <span class="mono consola__ruta">invitado@manuel.perez:~$</span>
+            <span class="mono consola__aviso" id="consola-aviso"></span>
+          </div>
+
+          <div class="consola__salida" id="consola-salida" role="log" aria-live="polite"></div>
+
+          <label class="consola__prompt" for="consola-entrada">
+            <span class="mono consola__signo" aria-hidden="true">$</span>
+            <span class="visualmente-oculto">Escribe un comando</span>
+            <input
+              class="mono consola__entrada"
+              id="consola-entrada"
+              type="text"
+              maxlength="200"
+              autocomplete="off"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+              placeholder="prueba algo"
+            />
+          </label>
+        </div>
+
+        <p class="prosa consola__pie" id="consola-pie"></p>
+      </div>
+    </section>
+
     <section class="seccion" id="mapa">
       <div class="marco">
         <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf05b;</span>~/mapa</p>
@@ -191,6 +233,7 @@
   <script src="js/datos.js"></script>
   <script src="js/app.js"></script>
   <script src="js/fondo.js"></script>
+  <script src="js/consola.js"></script>
   <script src="js/globo-puntos.js"></script>
   <script src="js/globo.js"></script>
 </body>

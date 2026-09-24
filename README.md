@@ -30,6 +30,24 @@ Son dos capas y ninguna captura el ratón:
 - La rejilla de 48px es CSS puro (`body::before` en `css/estilo.css`).
 - La red de nodos es `js/fondo.js` dibujando sobre un `<canvas>`. Se para sola si la pestaña deja de verse y, si el sistema pide menos movimiento, pinta un fotograma y no anima. Para quitarla, borra la etiqueta `<script src="js/fondo.js">` de `index.html`.
 
+## La consola de pega
+
+La sección `~/consola` es una terminal falsa para quien llegue con ganas de probar cosas. No ejecuta nada: compara lo escrito contra una lista de expresiones regulares y responde con texto.
+
+Todo vive en `DATOS.consola` dentro de `js/datos.js`:
+
+- `respuestas`: lista de `{ patron, texto }`. `patron` es una expresión regular normal (`/^ls(s|$)/i`) y `texto` un array de líneas. **El primer patrón que encaja gana, así que el orden importa**: los comandos normales van antes que los patrones de ataque, o `cat` acabaría capturado por el de inyección de comandos.
+- `porDefecto`: respuestas para cuando no encaja nada. Van rotando.
+- `bienvenida`, `intro`, `aviso` y `pie`: los textos de alrededor.
+
+Hay una flag escondida: `ls` lista un fichero que invita a no mirarlo, `cat` sobre ese fichero la enseña, y escribirla tiene su propia respuesta.
+
+**Tres reglas que no se rompen en `js/consola.js`:**
+
+1. Todo se pinta con `textContent`, nunca con `innerHTML`. Sería ridículo tener un XSS de verdad justo en la sección que se ríe de quien busca uno.
+2. Nada de `eval` ni de `new Function` sobre lo que escribe el visitante.
+3. No se envía nada a ningún sitio ni se guarda nada: no hay servidor detrás, y el texto de la sección lo dice.
+
 ## El globo 3D
 
 La sección `~/mapa` dibuja un globo con three.js: los continentes son puntos, y cada arco es un origen llamando a la puerta de un servidor.
@@ -92,7 +110,8 @@ css/estilo.css       estilo (tema oscuro, tipografía, layout)
 js/datos.js           todo el contenido editable
 js/app.js              vuelca datos.js en el HTML y mueve el triage
 js/fondo.js             red de nodos del fondo
-js/globo.js              globo 3D de ~/mapa
+js/consola.js            la terminal de pega
+js/globo.js               globo 3D de ~/mapa
 js/globo-puntos.js        los continentes, punto a punto
 js/vendor/three.module.js  three.js
 fonts/                   las tres fuentes, recortadas
