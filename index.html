@@ -44,22 +44,31 @@
   <main id="contenido">
 
     <section class="hero" id="inicio">
-      <div class="marco">
-        <p class="etiqueta" id="hero-eyebrow"></p>
-        <h1 class="hero__titulo">
-          <span id="hero-nombre"></span>
-        </h1>
-        <p class="hero__rol">
-          <span id="hero-rol"></span> <span class="hero__separador">·</span> <span id="hero-objetivo"></span>
-        </p>
-        <p class="hero__resumen prosa" id="hero-resumen"></p>
-        <div class="hero__acciones">
-          <a class="boton boton--primario" id="enlace-cv-hero" href="#" download>descargar CV</a>
-          <a class="boton boton--linea" href="#contacto">hablemos</a>
+      <div class="marco hero__marco">
+        <div class="hero__texto">
+          <p class="etiqueta" id="hero-eyebrow"></p>
+          <h1 class="hero__titulo">
+            <span id="hero-nombre"></span>
+          </h1>
+          <p class="hero__rol">
+            <span id="hero-rol"></span> <span class="hero__separador">·</span> <span id="hero-objetivo"></span>
+          </p>
+          <p class="hero__resumen prosa" id="hero-resumen"></p>
+          <div class="hero__acciones">
+            <a class="boton boton--primario" id="enlace-cv-hero" href="#" download>descargar CV</a>
+            <a class="boton boton--linea" href="#contacto">hablemos</a>
+          </div>
+          <p class="hero__ubicacion">
+            <span class="icono" aria-hidden="true">&#xf041;</span><span id="hero-ubicacion"></span>
+          </p>
         </div>
-        <p class="hero__ubicacion">
-          <span class="icono" aria-hidden="true">&#xf041;</span><span id="hero-ubicacion"></span>
-        </p>
+
+        <aside class="tarjeta-terminal" id="hero-tarjeta" aria-label="Resumen rápido">
+          <div class="tarjeta-terminal__barra">
+            <span class="mono tarjeta-terminal__ruta">manuel@portfolio:~</span>
+          </div>
+          <div class="tarjeta-terminal__cuerpo" id="hero-tarjeta-cuerpo"></div>
+        </aside>
       </div>
     </section>
 
@@ -67,7 +76,13 @@
       <div class="marco">
         <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf007;</span>~/sobre-mí</p>
         <h2 class="titulo-seccion">Quién soy</h2>
-        <p class="prosa texto-grande" id="sobre-mi-texto"></p>
+        <div class="columnas-sobre-mi">
+          <p class="prosa texto-grande" id="sobre-mi-texto"></p>
+          <aside class="bloque-lateral" id="bloque-ahora">
+            <p class="mono bloque-lateral__titulo" id="ahora-titulo"></p>
+            <ul class="bloque-lateral__lista" id="ahora-lista"></ul>
+          </aside>
+        </div>
       </div>
     </section>
 
@@ -106,6 +121,7 @@
         <h2 class="titulo-seccion" id="triage-titulo"></h2>
         <p class="prosa texto-grande" id="triage-intro"></p>
 
+        <div class="columnas-triage">
         <div class="triage" id="triage-panel">
           <div class="triage__barra">
             <p class="mono triage__contador" id="triage-contador"></p>
@@ -131,6 +147,9 @@
             <p class="prosa triage__explicacion" id="triage-cierre-texto"></p>
             <button class="boton boton--linea" type="button" id="triage-reiniciar">volver a empezar</button>
           </div>
+        </div>
+
+        <aside class="notas-triage" id="triage-notas" aria-label="Cómo se lee esto"></aside>
         </div>
       </div>
     </section>
@@ -198,15 +217,20 @@
       <div class="marco">
         <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf19d;</span>~/formación</p>
         <h2 class="titulo-seccion">Formación</h2>
-        <div class="lista-formacion" id="lista-formacion"></div>
-      </div>
-    </section>
 
-    <section class="seccion" id="idiomas">
-      <div class="marco">
-        <p class="etiqueta"><span class="icono" aria-hidden="true">&#xf0ac;</span>~/idiomas</p>
-        <h2 class="titulo-seccion">Idiomas</h2>
-        <div class="chips-idiomas" id="chips-idiomas"></div>
+        <div class="columnas-formacion">
+          <div class="lista-formacion" id="lista-formacion"></div>
+
+          <!-- Idiomas vivía en una sección propia, con tres palabras y media
+               pantalla vacía debajo. Aquí rellena el hueco de Formación y
+               conserva su id para que la ruta /idiomas siga funcionando. -->
+          <aside class="bloque-lateral" id="idiomas" data-ruta aria-label="Idiomas">
+            <p class="mono bloque-lateral__titulo">
+              <span class="icono" aria-hidden="true">&#xf0ac;</span>idiomas
+            </p>
+            <div class="chips-idiomas" id="chips-idiomas"></div>
+          </aside>
+        </div>
       </div>
     </section>
 

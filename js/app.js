@@ -76,6 +76,56 @@
     }
   }
 
+  /* Tarjeta de la portada: comandos inventados con su salida. */
+  function pintarTarjeta() {
+    const cuerpo = document.getElementById("hero-tarjeta-cuerpo");
+    const tarjeta = document.getElementById("hero-tarjeta");
+    if (!cuerpo || !tarjeta) return;
+
+    const lineas = DATOS.perfil.tarjeta || [];
+    if (!lineas.length) {
+      tarjeta.remove();
+      return;
+    }
+
+    lineas.forEach(function (l) {
+      const orden = document.createElement("p");
+      orden.className = "mono tarjeta-terminal__orden";
+      const signo = document.createElement("span");
+      signo.className = "tarjeta-terminal__signo";
+      signo.textContent = "$ ";
+      orden.appendChild(signo);
+      orden.appendChild(document.createTextNode(l.orden));
+
+      const salida = document.createElement("p");
+      salida.className = "mono tarjeta-terminal__salida";
+      salida.textContent = l.salida;
+
+      cuerpo.appendChild(orden);
+      cuerpo.appendChild(salida);
+    });
+  }
+
+  /* Columna de "en lo que ando", al lado de Quién soy. */
+  function pintarAhora() {
+    const bloque = document.getElementById("bloque-ahora");
+    const lista = document.getElementById("ahora-lista");
+    if (!bloque || !lista) return;
+
+    const cfg = DATOS.ahora;
+    if (!cfg || !cfg.puntos || !cfg.puntos.length) {
+      bloque.remove();
+      return;
+    }
+
+    texto("ahora-titulo", cfg.titulo);
+    cfg.puntos.forEach(function (p) {
+      const li = document.createElement("li");
+      li.textContent = p;
+      lista.appendChild(li);
+    });
+  }
+
   function pintarExperiencia() {
     const cont = document.getElementById("lista-experiencia");
     if (!cont) return;
@@ -270,6 +320,25 @@
 
     texto("triage-titulo", cfg.titulo);
     texto("triage-intro", cfg.intro);
+
+    const notas = document.getElementById("triage-notas");
+    if (notas && cfg.notas && cfg.notas.length) {
+      cfg.notas.forEach(function (n) {
+        const bloque = document.createElement("div");
+        bloque.className = "nota-triage";
+        const titulo = document.createElement("p");
+        titulo.className = "mono nota-triage__titulo";
+        titulo.textContent = n.titulo;
+        const cuerpo = document.createElement("p");
+        cuerpo.className = "prosa nota-triage__texto";
+        cuerpo.textContent = n.texto;
+        bloque.appendChild(titulo);
+        bloque.appendChild(cuerpo);
+        notas.appendChild(bloque);
+      });
+    } else if (notas) {
+      notas.remove();
+    }
 
     const elLog = document.getElementById("triage-log");
     const elOrigen = document.getElementById("triage-origen");
@@ -490,9 +559,12 @@
     function seccionDe(id) {
       if (!id) return null;
       const destino = document.getElementById(id);
-      // Solo las secciones tienen ruta propia: el enlace de "saltar al
-      // contenido" apunta al <main> y ese no debe cambiar la URL.
-      return destino && destino.tagName === "SECTION" ? destino : null;
+      // Solo las secciones (y lo marcado con data-ruta, como el bloque de
+      // idiomas) tienen ruta propia: el enlace de "saltar al contenido"
+      // apunta al <main> y ese no debe cambiar la URL.
+      if (!destino) return null;
+      const valido = destino.tagName === "SECTION" || destino.hasAttribute("data-ruta");
+      return valido ? destino : null;
     }
 
     function irA(id, cambiarUrl) {
@@ -563,6 +635,8 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     pintarCabecera();
+    pintarTarjeta();
+    pintarAhora();
     pintarExperiencia();
     pintarStack();
     pintarProyectos();

@@ -1222,7 +1222,175 @@ body::before {
 }
 
 
-/* Al saltar a una sección, la cabecera pegajosa taparía su etiqueta. */
-main > section[id] {
+/* Al saltar a una sección, la cabecera pegajosa taparía su etiqueta.
+   Vale igual para los destinos marcados con data-ruta, como idiomas. */
+main > section[id],
+[data-ruta] {
   scroll-margin-top: 84px;
+}
+
+/* ============================================================
+   COLUMNAS DE APOYO
+   Cuatro sitios donde el contenido ocupaba la mitad izquierda y el
+   resto se quedaba en blanco: la portada, Quién soy, el triage y
+   Formación. Todas colapsan a una sola columna en pantallas
+   estrechas, y el bloque lateral pasa debajo.
+   ============================================================ */
+
+.hero__marco {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+  gap: clamp(32px, 5vw, 96px);
+  align-items: center;
+}
+
+/* Tarjeta de la portada */
+.tarjeta-terminal {
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-l);
+  background: var(--bg-elevado);
+  overflow: hidden;
+}
+
+.tarjeta-terminal__barra {
+  padding: var(--s2) var(--s3);
+  border-bottom: 1px solid var(--borde);
+  background: var(--bg);
+}
+
+.tarjeta-terminal__ruta {
+  font-size: var(--paso-1);
+  color: var(--texto-apagado);
+}
+
+.tarjeta-terminal__cuerpo {
+  padding: var(--s3);
+}
+
+.tarjeta-terminal__orden {
+  margin: 0;
+  font-size: var(--paso-1);
+  color: var(--texto);
+}
+
+.tarjeta-terminal__signo {
+  color: var(--acento);
+}
+
+.tarjeta-terminal__salida {
+  margin: 0 0 var(--s2);
+  padding-left: 1.1em;
+  font-size: var(--paso-1);
+  line-height: 1.6;
+  color: var(--texto-tenue);
+}
+
+.tarjeta-terminal__salida:last-child {
+  margin-bottom: 0;
+}
+
+/* Bloque lateral genérico: "en lo que ando" e idiomas */
+.columnas-sobre-mi,
+.columnas-formacion {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+
+.bloque-lateral {
+  border-left: 1px solid var(--borde);
+  padding-left: var(--s4);
+}
+
+.bloque-lateral__titulo {
+  margin: 0 0 var(--s3);
+  font-size: var(--paso-1);
+  color: var(--acento);
+  text-transform: lowercase;
+}
+
+.bloque-lateral__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+}
+
+.bloque-lateral__lista li {
+  position: relative;
+  padding-left: var(--s3);
+  color: var(--texto-tenue);
+  line-height: 1.7;
+}
+
+.bloque-lateral__lista li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 6px;
+  height: 1px;
+  background: var(--acento);
+}
+
+/* Notas al margen del triage */
+.columnas-triage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+  gap: clamp(32px, 4vw, 64px);
+  align-items: start;
+  margin-top: var(--s5);
+}
+
+.columnas-triage .triage {
+  margin-top: 0;
+  max-width: none;
+}
+
+.notas-triage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  padding-left: var(--s4);
+  border-left: 1px solid var(--borde);
+}
+
+.nota-triage__titulo {
+  margin: 0 0 var(--s1);
+  font-size: var(--paso-1);
+  color: var(--acento);
+  text-transform: lowercase;
+}
+
+.nota-triage__texto {
+  margin: 0;
+  font-size: var(--paso-1);
+  line-height: 1.7;
+  color: var(--texto-apagado);
+  max-width: none;
+}
+
+@media (max-width: 1000px) {
+  .hero__marco,
+  .columnas-sobre-mi,
+  .columnas-formacion,
+  .columnas-triage {
+    grid-template-columns: 1fr;
+    gap: var(--s4);
+  }
+
+  .bloque-lateral,
+  .notas-triage {
+    border-left: 0;
+    border-top: 1px solid var(--borde);
+    padding-left: 0;
+    padding-top: var(--s3);
+  }
+
+  .notas-triage {
+    margin-top: var(--s3);
+  }
 }

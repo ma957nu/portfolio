@@ -10,6 +10,21 @@ Campos que quedan pendientes de rellenar:
 
 - `contacto.telefono` y `contacto.direccion`: vacíos por privacidad. Si los rellenas, aparecen en la web pública.
 
+## Los bloques laterales
+
+Cuatro sitios de la web tenían el contenido pegado a la izquierda y media pantalla en blanco al lado. Cada uno lleva ahora una columna de apoyo, y todas se apilan debajo en pantallas estrechas:
+
+| dónde | qué hay | de dónde sale |
+| --- | --- | --- |
+| portada | tarjeta con pinta de terminal | `DATOS.perfil.tarjeta` |
+| Quién soy | "en lo que ando" | `DATOS.ahora` |
+| triage | tres notas sobre cómo se lee un turno | `DATOS.triage.notas` |
+| Formación | los idiomas | `DATOS.idiomas` |
+
+**Idiomas ya no es una sección propia**: eran cuatro palabras con media pantalla vacía debajo. Ahora es la columna derecha de Formación, pero conserva su `id` y lleva `data-ruta`, así que la dirección `/idiomas` sigue funcionando igual.
+
+Vaciar cualquiera de esos bloques en `js/datos.js` hace que desaparezca solo, sin dejar el hueco.
+
 ## El triage de logs
 
 La sección `~/triage` enseña una línea de log y pide decidir si es normal o sospechosa. Los casos están en `DATOS.triage.casos`, y cada uno tiene cuatro campos:

@@ -23,9 +23,28 @@ const DATOS = {
     // dos o tres líneas.
     titular:
       "Administro sistemas y accesos en un entorno bancario real. Ahora estoy llevando esa experiencia hacia la defensa: detección de amenazas, hardening y automatización.",
+    // Tarjeta de la portada, a la derecha del nombre. Cada línea es un comando
+    // inventado y su salida; si la vacías, la tarjeta desaparece.
+    tarjeta: [
+      { orden: "whoami", salida: "manuel · administrador de sistemas y redes" },
+      { orden: "uptime", salida: "~1 año en un entorno bancario en producción" },
+      { orden: "cat objetivo.txt", salida: "analista SOC N1" },
+      { orden: "ls ~/ahora", salida: "master-ciberseguridad-ia/  ansible/  terraform/" },
+    ],
     // Texto largo de la sección "Quién soy".
     resumen:
       "Llevo cerca de un año administrando sistemas en un entorno bancario real, con herramientas de identidad y acceso que no perdonan un fallo. Resuelvo incidencias por mi cuenta y aprendo rápido lo que hace falta para la siguiente. Ahora mismo estoy cursando un máster en Ciberseguridad e Inteligencia Artificial para enfocar ese conocimiento hacia detección de amenazas, hardening y automatización de despliegues seguros.",
+  },
+
+  // Columna de la derecha en "Quién soy". Lo que tengas entre manos ahora.
+  ahora: {
+    titulo: "en lo que ando",
+    puntos: [
+      "Máster en Ciberseguridad e IA, a mitad de camino.",
+      "Ansible y Terraform, en los ratos que deja el máster.",
+      "Máquinas de HackTheBox cuando una se me atraganta y no la suelto.",
+      "Esta web, que también cuenta como práctica.",
+    ],
   },
 
   contacto: {
@@ -171,6 +190,21 @@ const DATOS = {
       medio: "Vas bien. Casi todos los fallos en un turno real salen de lo mismo: algo que parece raro pero es rutina, y algo que parece rutina y no lo es.",
       bajo: "Cuesta más de lo que parece. Un turno son miles de líneas como estas y casi todas son ruido, así que el oficio está en saber qué mirar primero.",
     },
+    // Columna de la derecha del ejercicio. Contexto, no instrucciones.
+    notas: [
+      {
+        titulo: "el ruido manda",
+        texto: "En un turno normal, la inmensa mayoría de lo que llega no es nada. El oficio está en descartar rápido sin tragarte lo que sí importa.",
+      },
+      {
+        titulo: "el contexto cambia el veredicto",
+        texto: "La misma línea puede ser rutina a las diez de la mañana y un incidente a las tres de la madrugada. La hora, el usuario y el origen pesan tanto como el evento.",
+      },
+      {
+        titulo: "ante la duda, se escala",
+        texto: "Un N1 no cierra lo que no entiende. Preguntar cuesta cinco minutos; dar por bueno un acceso raro puede costar bastante más.",
+      },
+    ],
     casos: [
       {
         origen: "auth.log · servidor de salto",
