@@ -13,6 +13,8 @@
 </head>
 <body>
 
+  <canvas id="fondo-red" aria-hidden="true"></canvas>
+
   <a class="salto" href="#contenido">saltar al contenido</a>
 
   <header class="cabecera">
@@ -25,6 +27,7 @@
         <a href="#experiencia">~/experiencia</a>
         <a href="#stack">~/stack</a>
         <a href="#proyectos">~/proyectos</a>
+        <a href="#triage">~/triage</a>
         <a href="#contacto">~/contacto</a>
       </nav>
       <a class="boton boton--linea nav-cv" id="enlace-cv-nav" href="#" download>descargar CV</a>
@@ -90,6 +93,41 @@
       </div>
     </section>
 
+    <section class="seccion" id="triage">
+      <div class="marco">
+        <p class="etiqueta">~/triage</p>
+        <h2 class="titulo-seccion" id="triage-titulo"></h2>
+        <p class="prosa texto-grande" id="triage-intro"></p>
+
+        <div class="triage" id="triage-panel">
+          <div class="triage__barra">
+            <p class="mono triage__contador" id="triage-contador"></p>
+            <p class="mono triage__marcador" id="triage-marcador"></p>
+          </div>
+
+          <pre class="triage__log" id="triage-log" tabindex="0" aria-live="polite"></pre>
+          <p class="mono triage__origen" id="triage-origen"></p>
+
+          <div class="triage__acciones" id="triage-acciones">
+            <button class="boton boton--linea" type="button" id="triage-normal">normal</button>
+            <button class="boton boton--linea" type="button" id="triage-sospechoso">sospechoso</button>
+          </div>
+
+          <div class="triage__respuesta" id="triage-respuesta" role="status" aria-live="polite" hidden>
+            <p class="mono triage__veredicto" id="triage-veredicto"></p>
+            <p class="prosa triage__explicacion" id="triage-explicacion"></p>
+            <button class="boton boton--primario" type="button" id="triage-siguiente">siguiente</button>
+          </div>
+
+          <div class="triage__cierre" id="triage-cierre" hidden>
+            <p class="mono triage__veredicto" id="triage-resultado"></p>
+            <p class="prosa triage__explicacion" id="triage-cierre-texto"></p>
+            <button class="boton boton--linea" type="button" id="triage-reiniciar">volver a empezar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="seccion" id="formacion">
       <div class="marco">
         <p class="etiqueta">~/formación</p>
@@ -128,5 +166,6 @@
 
   <script src="js/datos.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/fondo.js"></script>
 </body>
 </html>

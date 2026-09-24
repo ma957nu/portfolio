@@ -17,6 +17,8 @@
   --acento: #64dbb8;
   --acento-fuerte: #8ee8cb;
   --acento-texto: #04211a;
+  /* Solo para marcar un fallo en el triage. 7:1 sobre la tarjeta. */
+  --aviso: #e8836f;
 
   /* tipografía */
   --fuente-sans: "Inter", -apple-system, "Segoe UI", "Segoe UI Variable", system-ui, sans-serif;
@@ -704,5 +706,144 @@ a {
   }
   .fila-contacto__etiqueta {
     width: auto;
+  }
+}
+
+/* ============================================================
+   FONDO: rejilla fija + red de nodos en canvas
+   El canvas va por detrás de todo y no captura el ratón, así que
+   ni tapa texto ni interfiere con los enlaces.
+   ============================================================ */
+
+#fondo-red {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* Rejilla de 48px. Al 3% de opacidad se intuye, no se lee. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(100, 219, 184, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 219, 184, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* El contenido se apoya encima del fondo. */
+#contenido,
+.pie {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   TRIAGE DE LOGS
+   ============================================================ */
+
+.triage {
+  margin-top: var(--s5);
+  padding: var(--s4);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-l);
+  background: var(--bg-elevado);
+  max-width: 1100px;
+}
+
+.triage__barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s2);
+  flex-wrap: wrap;
+  margin-bottom: var(--s3);
+}
+
+.triage__contador,
+.triage__marcador {
+  margin: 0;
+  font-size: var(--paso-1);
+  color: var(--texto-apagado);
+  text-transform: lowercase;
+}
+
+.triage__log {
+  margin: 0;
+  padding: var(--s3);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-m);
+  background: var(--bg);
+  font-family: var(--fuente-mono);
+  font-size: var(--paso-1);
+  line-height: 1.7;
+  color: var(--texto);
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 5.5em;
+}
+
+.triage__log:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 3px;
+}
+
+.triage__origen {
+  margin: var(--s1) 0 0;
+  font-size: var(--paso-1);
+  color: var(--texto-apagado);
+}
+
+.triage__acciones {
+  display: flex;
+  gap: var(--s2);
+  flex-wrap: wrap;
+  margin-top: var(--s3);
+}
+
+.triage__respuesta,
+.triage__cierre {
+  margin-top: var(--s3);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s2);
+}
+
+.triage__veredicto {
+  margin: 0;
+  font-size: var(--paso-1);
+  text-transform: lowercase;
+  color: var(--texto-tenue);
+}
+
+.triage__veredicto--ok {
+  color: var(--acento);
+}
+
+/* Único color fuera del acento en toda la web: marcar un fallo con el mismo
+   verde que los aciertos haría el ejercicio ilegible. */
+.triage__veredicto--fallo {
+  color: var(--aviso);
+}
+
+.triage__explicacion {
+  margin: 0;
+  color: var(--texto-tenue);
+}
+
+@media (max-width: 560px) {
+  .triage {
+    padding: var(--s3);
+  }
+
+  .triage__acciones .boton {
+    flex: 1 1 auto;
+    text-align: center;
   }
 }

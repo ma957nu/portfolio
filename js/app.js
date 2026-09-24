@@ -215,6 +215,108 @@
     });
   }
 
+  /*
+   * Triage de logs: enseña una línea, recoge la decisión del visitante y
+   * explica qué la delataba. El estado vive aquí dentro, no hay nada que
+   * guardar ni que enviar a ningún sitio.
+   */
+  function pintarTriage() {
+    const panel = document.getElementById("triage-panel");
+    if (!panel) return;
+
+    const cfg = DATOS.triage;
+    const casos = cfg && cfg.casos ? cfg.casos : [];
+    if (!casos.length) {
+      const seccion = document.getElementById("triage");
+      if (seccion) seccion.remove();
+      const enlaceNav = document.querySelector('.nav a[href="#triage"]');
+      if (enlaceNav) enlaceNav.remove();
+      return;
+    }
+
+    texto("triage-titulo", cfg.titulo);
+    texto("triage-intro", cfg.intro);
+
+    const elLog = document.getElementById("triage-log");
+    const elOrigen = document.getElementById("triage-origen");
+    const elContador = document.getElementById("triage-contador");
+    const elMarcador = document.getElementById("triage-marcador");
+    const acciones = document.getElementById("triage-acciones");
+    const respuesta = document.getElementById("triage-respuesta");
+    const veredicto = document.getElementById("triage-veredicto");
+    const explicacion = document.getElementById("triage-explicacion");
+    const cierre = document.getElementById("triage-cierre");
+    const resultado = document.getElementById("triage-resultado");
+    const cierreTexto = document.getElementById("triage-cierre-texto");
+
+    let indice = 0;
+    let aciertos = 0;
+
+    function mostrarCaso() {
+      const caso = casos[indice];
+      elLog.textContent = caso.linea;
+      elOrigen.textContent = caso.origen || "";
+      elContador.textContent = "caso " + (indice + 1) + " de " + casos.length;
+      elMarcador.textContent = "aciertos " + aciertos;
+      respuesta.hidden = true;
+      cierre.hidden = true;
+      acciones.hidden = false;
+    }
+
+    function responder(esSospechoso) {
+      const caso = casos[indice];
+      const acierto = esSospechoso === caso.sospechoso;
+      if (acierto) aciertos++;
+
+      veredicto.textContent = acierto
+        ? "correcto · " + (caso.sospechoso ? "sospechoso" : "normal")
+        : "no era eso · " + (caso.sospechoso ? "sospechoso" : "normal");
+      veredicto.className = "mono triage__veredicto " + (acierto ? "triage__veredicto--ok" : "triage__veredicto--fallo");
+      explicacion.textContent = caso.explicacion;
+
+      elMarcador.textContent = "aciertos " + aciertos;
+      acciones.hidden = true;
+      respuesta.hidden = false;
+      document.getElementById("triage-siguiente").focus();
+    }
+
+    function terminar() {
+      const ratio = aciertos / casos.length;
+      const cierres = cfg.cierres || {};
+      resultado.textContent = aciertos + " de " + casos.length;
+      resultado.className = "mono triage__veredicto";
+      cierreTexto.textContent =
+        ratio >= 0.75 ? cierres.alto : ratio >= 0.5 ? cierres.medio : cierres.bajo;
+      acciones.hidden = true;
+      respuesta.hidden = true;
+      cierre.hidden = false;
+      elLog.textContent = "";
+      elOrigen.textContent = "";
+      elContador.textContent = "ronda terminada";
+      elMarcador.textContent = "";
+    }
+
+    document.getElementById("triage-normal").addEventListener("click", function () {
+      responder(false);
+    });
+    document.getElementById("triage-sospechoso").addEventListener("click", function () {
+      responder(true);
+    });
+    document.getElementById("triage-siguiente").addEventListener("click", function () {
+      indice++;
+      if (indice >= casos.length) terminar();
+      else mostrarCaso();
+    });
+    document.getElementById("triage-reiniciar").addEventListener("click", function () {
+      indice = 0;
+      aciertos = 0;
+      mostrarCaso();
+      elLog.focus();
+    });
+
+    mostrarCaso();
+  }
+
   function pintarFormacion() {
     const cont = document.getElementById("lista-formacion");
     if (!cont) return;
@@ -333,6 +435,7 @@
     pintarExperiencia();
     pintarStack();
     pintarProyectos();
+    pintarTriage();
     pintarFormacion();
     pintarIdiomas();
     pintarContacto();

